@@ -1,0 +1,56 @@
+:root {
+    /*Colores*/
+    --silver1: rgb(192, 192, 192);
+    --silver2: rgb(169, 169, 169);
+    --silver3: rgb(128, 128, 128);
+    --silver4: rgb(105, 105, 105);
+    
+    --gray1: rgb(169, 169, 169);
+    --gray2: rgb(128, 128, 128);
+    --gray3: rgb(105, 105, 105);
+    --gray4: rgb(82, 82, 82);
+    
+    --blue1: rgb(0, 0, 255);
+    --blue2: rgb(70, 130, 180);
+    --blue3: rgb(135, 206, 235);
+    --blue4: rgb(173, 216, 230);
+    
+    --white: rgb(255, 255, 255);
+    --black: rgb(0, 0, 0);
+
+    /*Fonts*/
+    --bebas: "bebas";
+    --garam: "garamond";
+    --popBold: "poppinsXbold";
+    --popXLight: "poppinsXlight";
+    --popLight: "poppinsLight";
+    --popSemi: "poppinsSemi";
+}
+
+@font-face {
+    font-family: "bebas";
+    src: url('../../assets/BebasNeue-Regular.ttf');
+}
+
+@font-face {
+    font-family: "garamond";
+    src: url('../../assets/EBGaramond-VariableFont_wght.ttf');
+}
+
+
+@font-face {
+    font-family: "poppinsXbold";
+    src: url('../../assets/Poppins-ExtraBold.ttf');
+}
+@font-face {
+    font-family: "poppinsLight";
+    src: url('../../assets/Poppins-Light.ttf');
+}
+@font-face {
+    font-family: "poppinsXlight";
+    src: url('../../assets/Poppins-ExtraLight.ttf');
+}
+@font-face {
+    font-family: "poppinsSemi";
+    src: url('../../assets/Poppins-SemiBold.ttf');
+}
