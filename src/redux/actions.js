@@ -25,7 +25,7 @@ export const CREATE_REVIEW = 'CREATE_REVIEW';
 
 // Actions
 
-const URL = 'http://localhost:3001';
+const URL = 'https://pfback1-q5aoyanf.b4a.run/';
 
 export function getAllProducts(page, limit, filters) {
   return async function (dispatch) {
