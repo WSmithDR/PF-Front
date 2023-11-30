@@ -1,10 +1,9 @@
 
-import { Route, Routes } from 'react-router-dom';
-import SideNav from './components/AdminDashBoard/sideNav';
-import CreateProduct from './components/CreateProduct';
-import Detail from './components/Detail';
-import Searchs from './components/Searchs';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './views/Landing';
+import Detail from './components/Detail';
+import CreateProduct from './components/CreateProduct';
+import Searchs from './components/Searchs';
 import ShoppingCart from './views/ShoppingCart';
 
 const App = () => {
@@ -16,7 +15,6 @@ const App = () => {
         <Route path='/CreateProduct' element={<CreateProduct />} />
         <Route path='/searchs' element={<Searchs />} />
         <Route path='/shoppingCart' element={<ShoppingCart/>} />
-        <Route path='/dashboard' element={<SideNav/>} />
       </Routes>
     </main>
   );
