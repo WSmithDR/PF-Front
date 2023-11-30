@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Register from "../Login-register/Register/Register";
 import Login from "../Login-register/Login/Login";
+import ButtonLoginGoogle from "./ButtonLoginGoogle";
 
 function LoginRegister() {
   const [showRegister, setShowRegister] = useState(false);
@@ -34,6 +35,19 @@ function LoginRegister() {
 
       {showRegister && <Register />}
       {showLogin && <Login />}
+
+      <div class="relative py-6">
+        <div class="absolute inset-0 flex items-center">
+          <div class="w-full border-b border-gray-900 m-5"></div>
+        </div>
+        <div class="relative flex justify-center">
+          <span class="bg-white px-4 text-sm text-gray-500">Continuar con</span>
+        </div>
+      </div>
+
+      <div className="flex items-center justify-center">
+        <ButtonLoginGoogle />
+      </div>
     </div>
   );
 }

@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { h1_style, input_style, label_style, select_style, div_style, button_style, button_disabledStyle } from "./tailwindStylesRegister";
+import  { useState } from "react";
+import { h1_style, input_style, label_style, div_style, button_style, button_disabledStyle } from "./tailwindStylesRegister";
 import closureHandleChange from "./Handles/closureHandleChange"
 import closureHandleSubmit from "./Handles/closureHandleSubmit";
+import { createUser } from "../../../redux/actions";
+
 
 const Register = () => {
   const [userData, setUserData] = useState({
@@ -19,7 +21,7 @@ const Register = () => {
 
   const [errors, setErrors] = useState({});
   const handleChange = closureHandleChange(userData, setUserData, setIsButtonDisabled, setErrors)
-  const handleSubmit = closureHandleSubmit(userData, setMessage)
+  const handleSubmit = closureHandleSubmit(createUser(userData), setMessage)
   return (
     <div>
       <h1 className={h1_style}>Registro de Usuario</h1>
@@ -62,7 +64,7 @@ const Register = () => {
         <br />
 
         <div className={div_style}>
-          <button className={isButtonDisabled ? button_disabledStyle : button_style} type="submit" disabled={isButtonDisabled}>Registrar</button>
+          <button className={!isButtonDisabled ? button_disabledStyle : button_style} type="submit" disabled={isButtonDisabled}>Registrarse</button>
         </div>
         {messageRegister && <p className={h1_style}>{messageRegister}</p>}
       </form>
