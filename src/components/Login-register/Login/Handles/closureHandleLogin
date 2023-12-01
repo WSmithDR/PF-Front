@@ -1,6 +1,0 @@
-import axios from 'axios';
-const closureHandleLogin = ()=>{
-    //aca deberia estar el handle del llamado del back para traer al usuario logeado
-}
-
-export default closureHandleLogin

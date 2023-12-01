@@ -11,6 +11,16 @@ export const UPDATE_PRODUCTS = 'UPDATE_PRODUCTS';
 export const GET_DELETED_PRODUCTS = 'GET_DELETED_PRODUCTS';
 export const CLEAR_SEARCH_RESULTS = 'CLEAR_SEARCH_RESULTS';
 
+// LocalStorage
+
+export const LOCAL_STORAGE = 'LOCAL_STORAGE';
+
+// Cart
+
+export const ADD_TO_CART = 'ADD_TO_CART';
+export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
+export const FINISH_PURCHASE = 'FINISH_PURCHASE';
+
 // Admin
 
 export const REGISTER_ADMIN = 'REGISTER_NEW_ADMIN';
@@ -19,13 +29,26 @@ export const REGISTER_ADMIN = 'REGISTER_NEW_ADMIN';
 
 export const REGISTER_USER = 'REGISTER_NEW_USER';
 
+export const POST_LOGIN_REQUEST = 'POST_LOGIN_REQUEST';
+export const POST_LOGIN_SUCCESS = 'POST_LOGIN_SUCCESS';
+export const POST_LOGIN_FAILURE = 'POST_LOGIN_FAILURE';
+
+export const POST_USER_REQUEST = 'POST_USER_REQUEST';
+export const POST_USER_SUCCESS = 'POST_USER_SUCCESS';
+export const POST_USER_FAILURE = 'POST_USER_FAILURE';
+
+export const SEND_TOKEN_GOOGLE_REQUEST = 'SEND_TOKEN_GOOGLE_REQUEST';
+export const SEND_TOKEN_GOOGLE_SUCCESS = 'SEND_TOKEN_GOOGLE_SUCCESS';
+export const SEND_TOKEN_GOOGLE_FAILURE = 'SEND_TOKEN_GOOGLE_FAILURE';
+
+export const CLEAR_DATA = 'CLEAR_DATA'
 // Reviews
 
 export const CREATE_REVIEW = 'CREATE_REVIEW';
 
 // Actions
 
-const URL = 'http://localhost:3001';
+const URL = 'https://pfback1-q5aoyanf.b4a.run';
 
 export function getAllProducts(page, limit, filters) {
   return async function (dispatch) {
@@ -43,8 +66,6 @@ export function getAllProducts(page, limit, filters) {
     }
   };
 }
-
-
 
 export function getProductsByName(name) {
     return async function (dispatch) {
@@ -143,20 +164,6 @@ export function createAdmin(payload) {
     };
   }
 
-export function createUser(payload) {
-    return async function (dispatch) {
-      try {
-        const { data } = await fetch.post(`${URL}/user/signup`, payload);
-        dispatch({
-          type: REGISTER_USER,
-          payload: data,
-        });
-      } catch (error) {
-        throw error.response.data;
-      }
-    };
-  }
-
 export function createReview(newReview) {
     return async function (dispatch) {
       const reviews = await fetch.post(`${URL}/review`, newReview);
@@ -167,7 +174,137 @@ export function createReview(newReview) {
     };
   }
 
+export function putLocalstorage() {
+  if (localStorage.getItem('cart')) {
+    let cart = JSON.parse(localStorage.getItem('cart'));
+    return {
+      type: LOCAL_STORAGE,
+      payload: cart,
+      };
+    } else {
+      let cart = [];
+      return {
+        type: LOCAL_STORAGE,
+        payload: cart,
+      };
+    }
+  }
+
+export function removeFromCart(productId) {
+  return {
+    type: REMOVE_FROM_CART,
+    payload: productId,
+    };
+  }
+
+  export function finishPurchase(objectPago) {
+    return async function compra(dispatch) {
+      try {
+        const response = await axios.post(`${URL}/purchase/order`, objectPago);
+        window.location.href = response.data.init_point;
   
+        dispatch({
+          type: FINISH_PURCHASE,
   
+          payload: response.data,
+        });
+      } catch (error) {
+        console.error('Error al tratar de finalizar compra', error);
+      }
+    };
+  }
+
+  export const addToCart = (productById) => ({
+    type: 'ADD_TO_CART',
+    payload: productById,
+  });
+
+  export const postLoginRequest = () => ({
+    type: POST_LOGIN_REQUEST
+  });
+  export const postLoginSuccess = (user) => ({
+    type: POST_LOGIN_SUCCESS,
+    payload: user
+  });
+  export const postLoginFailure = (error) => ({
+    type: POST_LOGIN_FAILURE,
+    payload: error
+  });
+  export const postLogin = (user) => {
+    return async (dispatch) => {
+      dispatch(postLoginRequest());
+      try {
+        const { data } = await axios.post(`${URL}/user/login`, user);
+        if (data.accessToken) {
+          localStorage.setItem("token", data.accessToken);
+          localStorage.setItem("access", data.access)
+        }
+        dispatch(postLoginSuccess(data));
+      } catch (error) {
+        dispatch(postLoginFailure(error.response.data.error));
+      }
+    };
+  };
 
 
+export const postUserRequest = () => ({
+  type: POST_USER_REQUEST
+});
+export const postUserSuccess = (user) => ({
+  type: POST_USER_SUCCESS,
+  payload: user
+});
+export const postUserFailure = (error) => ({
+  type: POST_USER_FAILURE,
+  payload: error
+});
+export const postUser = (user) => {
+  return async (dispatch) => {
+    dispatch(postUserRequest());
+    try {
+      const { data } = await axios.post(`${URL}/user/signup`, user);
+      if (data.accessToken) {
+        localStorage.setItem("token", data.accessToken);
+        localStorage.setItem("access", data.access)
+      }
+      console.log(data);
+      dispatch(postUserSuccess(data));
+    } catch (error) {
+      dispatch(postUserFailure(error.response.data.error));
+    }
+  };
+};
+
+
+export const postTokenGoogleRequest = () => ({
+  type: SEND_TOKEN_GOOGLE_REQUEST
+});
+export const postTokenGoogleSuccess = (data) => ({
+  type: SEND_TOKEN_GOOGLE_SUCCESS,
+  payload: data
+});
+export const postTokenGoogleFailure = (error) => ({
+  type: SEND_TOKEN_GOOGLE_FAILURE,
+  payload: error
+});
+export const postTokenGoogle = (token) => {
+  return async (dispatch) => {
+    dispatch(postTokenGoogleRequest());
+    try {
+      const { data } = await axios.post(`${URL}/user/auth`, { token });
+      if (data.accessToken) {
+        localStorage.setItem("token", data.accessToken);
+        localStorage.setItem("refreshToken", data.refreshToken);
+        localStorage.setItem("access", data.access);
+      }
+      console.log(data);
+      dispatch(postTokenGoogleSuccess(data));
+    } catch (error) {
+      dispatch(postTokenGoogleFailure(error));
+    }
+  };
+};
+
+export const clearData = () => ({
+  type: CLEAR_DATA,
+});

@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import Swal from 'sweetalert2';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { getProductsById } from '../redux/actions';
+import { getProductsById, addToCart } from '../redux/actions';
 
 const Detail = () => {
   const { id } = useParams();
@@ -22,8 +23,28 @@ const Detail = () => {
 
   const isLocalImage = !productById.img?.startsWith("http");
 
+  const handleAddToCart = () => {
+    dispatch(addToCart({
+      id: productById._id,
+      title: productById.name,
+      price: productById.price,
+      image: productById.img,
+      description: productById.description,
+      quantity: selectedQuantity,
+    }));
+    
+    Swal.fire({
+      icon: 'success',
+      title: 'Producto añadido al carro',
+      showConfirmButton: false,
+      timer: 1500, 
+    });
+    
+  };
+
+
   return (
-    <div className='py-40 bg-gray-300 h-screen'>
+    <div className='py-40 h.full bg-gray-300 h-screen'>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
         <div className="flex flex-col md:flex-row -mx-4">
           <div className="md:flex-1 px-4">
@@ -65,25 +86,28 @@ const Detail = () => {
 
             <div className="flex py-4 space-x-4 items-center">
               <div className="relative">
-                <div className="text-center left-0 pt-2 right-0 absolute block text-xs uppercase text-gray-400 tracking-wide font-semibold">
+                <div className="text-center left-0 pt-2 right-0 absolute block text-xs uppercase text-black tracking-wide font-semibold">
                   Ctd
                 </div>
 
                 <select
                   value={selectedQuantity}
                   onChange={handleQuantityChange}
-                  className="cursor-pointer appearance-none rounded-xl border border-gray-200 pl-9 pr-8 h-14 flex items-end  pl-10 py-5"
+                  className="cursor-pointer appearance-none rounded-xl border border-gray-200 pl-9 pr-8 h-14 flex items-end text-center pr-5 pb-0.5"
                 >
                   {[...Array(productById.quantity).keys()].map((num) => (
                     <option key={num + 1} value={num + 1}>
                       {num + 1}
                     </option>
                   ))}
+                  
                 </select>
               </div>
 
 
-              <button type="button" className="h-14 px-6 py-2 font-semibold rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white">
+              <button type="button"
+               onClick={handleAddToCart}
+              className="h-14 px-6 py-2 font-semibold rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white">
                 Añadir al carro
               </button>
             </div>

@@ -55,7 +55,7 @@ const CreateProduct = () => {
   };
 
   const isFormValid =
-  product.img === '' ||
+  product.img === null ||
   !product.name ||
   !product.brand ||
   !product.sale ||
@@ -65,17 +65,33 @@ const CreateProduct = () => {
   !product.quantity;
 
   return (
-    <div className="p-5 bg-gray-500">
+    <div className="p-10 mt-5 bg-gray-500">
       <form
         encType="multipart/form-data"
         onSubmit={handleSubmit}
         className="md:flex"
       >
-
-        <div className="md:w-1/2 pr-4">
-          <div className="flex w-full h-screen items-center justify-center bg-grey-lighter rounded">
+        <div className="md:flex-1 p-1 bg-gray-900 rounded-lg flex items-center justify-center">
+          <div className="flex w-full h-screen items-center justify-center bg-grey-lighter rounded relative">
+            <input
+              type="file"
+              accept="image/*"
+              name="img"
+              onChange={handleImageChange}
+              required
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                opacity: 0, 
+                zIndex: 2,
+                cursor: 'pointer'
+              }}
+            />
             {product.img ? (
-              <div>
+              <div className="bg-gray-600 rounded-lg flex items-center justify-center">
                 <img
                   src={URL.createObjectURL(product.img)}
                   alt={`${product.name} image preview`}
@@ -87,20 +103,10 @@ const CreateProduct = () => {
                   <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
                 </svg>
                 <span className="mt-2 text-base leading-normal">Select a file</span>
-                <input
-                  type="file"
-                  accept="image/*"
-                  name="img"
-                  onChange={handleImageChange}
-                  required
-                  style={{ display: 'none' }}
-                />
               </label>
             )}
           </div>
         </div>
-
-
         <div className="md:w-1/2 pl-4">
           <div className="bg-white shadow-md rounded px-8  pb-8  flex flex-col  h-screen justify-center">
             <div className="-mx-3 md:flex mb-6">
@@ -139,7 +145,7 @@ const CreateProduct = () => {
             </div>
 
 
-            <div className="-mx-3 md:flex mb-6">
+            <div className="-mx-3 md:flex mb-3">
               <div className="md:w-full px-3">
                 <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" htmlFor="grid-password">
                   Description
@@ -151,7 +157,7 @@ const CreateProduct = () => {
                   value={product.description}
                   onChange={handleChange}
                   name="description"
-                  style={{ height: '150px', lineHeight: '1.5' }} // Ajusta la altura y el line-height según tus necesidades
+                  style={{ height: '100px', lineHeight: '1.5' }} // Ajusta la altura y el line-height según tus necesidades
                 />
                 {errors.description && <p className="text-red-900 text-xs italic">{errors.description}</p>}
               </div>
@@ -260,7 +266,6 @@ const CreateProduct = () => {
 
           </div>
         </div>
-
       </form>
     </div>
   );
