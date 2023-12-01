@@ -11,16 +11,6 @@ export const UPDATE_PRODUCTS = 'UPDATE_PRODUCTS';
 export const GET_DELETED_PRODUCTS = 'GET_DELETED_PRODUCTS';
 export const CLEAR_SEARCH_RESULTS = 'CLEAR_SEARCH_RESULTS';
 
-// LocalStorage
-
-export const LOCAL_STORAGE = 'LOCAL_STORAGE';
-
-// Cart
-
-export const ADD_TO_CART = 'ADD_TO_CART';
-export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
-export const FINISH_PURCHASE = 'FINISH_PURCHASE';
-
 // Admin
 
 export const REGISTER_ADMIN = 'REGISTER_NEW_ADMIN';
@@ -35,7 +25,7 @@ export const CREATE_REVIEW = 'CREATE_REVIEW';
 
 // Actions
 
-const URL = 'https://pfback1-q5aoyanf.b4a.run';
+const URL = 'http://localhost:3001';
 
 export function getAllProducts(page, limit, filters) {
   return async function (dispatch) {
@@ -53,6 +43,8 @@ export function getAllProducts(page, limit, filters) {
     }
   };
 }
+
+
 
 export function getProductsByName(name) {
     return async function (dispatch) {
@@ -175,48 +167,7 @@ export function createReview(newReview) {
     };
   }
 
-export function putLocalstorage() {
-  if (localStorage.getItem('cart')) {
-    let cart = JSON.parse(localStorage.getItem('cart'));
-    return {
-      type: LOCAL_STORAGE,
-      payload: cart,
-      };
-    } else {
-      let cart = [];
-      return {
-        type: LOCAL_STORAGE,
-        payload: cart,
-      };
-    }
-  }
-
-export function removeFromCart(productId) {
-  return {
-    type: REMOVE_FROM_CART,
-    payload: productId,
-    };
-  }
-
-  export function finishPurchase(objectPago) {
-    return async function compra(dispatch) {
-      try {
-        const response = await axios.post(`${URL}/purchase/order`, objectPago);
-        window.location.href = response.data.init_point;
   
-        dispatch({
-          type: FINISH_PURCHASE,
   
-          payload: response.data,
-        });
-      } catch (error) {
-        console.error('Error al tratar de finalizar compra', error);
-      }
-    };
-  }
 
-  export const addToCart = (productById) => ({
-    type: 'ADD_TO_CART',
-    payload: productById,
-  });
 

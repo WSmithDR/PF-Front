@@ -4,6 +4,7 @@ import { form_style, div_style, button_disabledStyle, button_style, label_style,
 import closureHandleChange from "./Handles/closureHandleChange";
 import closureHandleLogin from "./Handles/closureHandleLogin";
 
+
 const Login = () => {
   const dispatch = useDispatch();
   const [userData, setUserData] = useState({
@@ -48,7 +49,7 @@ const Login = () => {
 
         <div className={divButtons_style}>
           <button
-            className={!isButtonDisabled ? button_disabledStyle : button_style}
+            className={isButtonDisabled ? button_disabledStyle : button_style}
             name='User'
             type="submit"
             onClick={handleLogin}

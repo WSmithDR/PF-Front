@@ -9,11 +9,7 @@ import {
     REGISTER_ADMIN,
     REGISTER_USER,
     CREATE_REVIEW,
-    CLEAR_SEARCH_RESULTS,
-    LOCAL_STORAGE,
-    REMOVE_FROM_CART,
-    FINISH_PURCHASE,
-    ADD_TO_CART
+    CLEAR_SEARCH_RESULTS
   } from './actions';
   
   const initialState = {
@@ -24,9 +20,6 @@ import {
     admins: [],
     users: [],
     reviews: [],
-    localStorage: [],
-    cart: [],
-    items: []
   };
   
   const reducer = (state = initialState, action) => {
@@ -99,34 +92,10 @@ import {
           ...state,
           reviews: [...state.reviews, action.payload],
         };
-      
-      case LOCAL_STORAGE:
-        return {
-          ...state,
-          localstorage: [action.payload],
-          };
-      
-      case REMOVE_FROM_CART:
-        // eslint-disable-next-line no-case-declarations
-        const productIdToRemove = action.payload;
-          return {
-          ...state,
-           cart: state.cart.filter(item => item.id !== productIdToRemove),
-  };
-      case FINISH_PURCHASE:
-          return {
-            ...state,
-              cart: action.payload
-              };
-      
-      case ADD_TO_CART:
-          return {
-            ...state,
-              cart: [...state.cart, action.payload],
-                };
-          default:
-            return state;
-          }
+  
+      default:
+        return state;
+    }
   };
   
   export default reducer;
