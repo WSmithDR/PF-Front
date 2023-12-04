@@ -23,7 +23,7 @@ const SearchBar = () => {
 
   return (
     <div>      
-      <div className="rounded-lg bg-gray-200 p-1">
+      <div className="rounded-lg bg-gray-200">
         <div className="flex">
           <div className="flex w-10 items-center justify-center rounded-tl-lg rounded-bl-lg border-r border-gray-200 bg-white">
             <svg viewBox="0 0 20 20" aria-hidden="true" className="pointer-events-none absolute w-5 fill-gray-500 transition">

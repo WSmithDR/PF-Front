@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import {jwtDecode} from 'jwt-decode';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeFromCart, finishPurchase } from '../redux/actions';
 import Swal from 'sweetalert2';
@@ -39,10 +40,16 @@ const ShoppingCart = () => {
       return;
     }
 
+    const token = localStorage.getItem('token');
+    const decodedToken = jwtDecode(token);
+    const userId = decodedToken.id
+
     const objetoPago = cartItems.map((item) => ({
       ...item,
+      productId: item.id,
       unit_price: item.price,
       currency_id: 'MEX',
+      userId: userId
     }));
 
     dispatch(finishPurchase(objetoPago));

@@ -14,6 +14,8 @@ import {
     REMOVE_FROM_CART,
     FINISH_PURCHASE,
     ADD_TO_CART,
+    GET_ALL_USERS,
+    GET_USER_BY_ID,
     POST_LOGIN_REQUEST, POST_LOGIN_SUCCESS, POST_LOGIN_FAILURE,
     POST_USER_REQUEST, POST_USER_SUCCESS, POST_USER_FAILURE,
     SEND_TOKEN_GOOGLE_REQUEST, SEND_TOKEN_GOOGLE_SUCCESS, SEND_TOKEN_GOOGLE_FAILURE,
@@ -27,6 +29,7 @@ const initialState = {
   deletedProducts: [],
   admins: [],
   users: [],
+  userDetail:[],
   reviews: [],
   localStorage: [],
   cart: [],
@@ -46,9 +49,9 @@ const initialState = {
   loadingPostTokenGoogle: false,
   errorPostTokenGoogle: false,
   successPostTokenGoogle: false,
+  messageGoogle: '',
+  
   dataUser: [],
-  messageGoogle: ''
-
 };
   
   const reducer = (state = initialState, action) => {
@@ -147,6 +150,18 @@ const initialState = {
               cart: [...state.cart, action.payload],
                 };
       
+      case GET_ALL_USERS:
+        return {
+          ...state,
+          allUsers: action.payload,
+          };
+
+      case GET_USER_BY_ID:
+        return {
+          ...state,
+          userDetail: action.payload,
+            };
+
       case POST_LOGIN_REQUEST:
         return {
           ...state,
@@ -161,7 +176,8 @@ const initialState = {
           errorPostLogin: false,
           successPostLogin: true,
           access: action.payload.access,
-          messageLogin: action.payload.data.message
+          messageLogin: action.payload.data.message,
+          dataUser: action.payload.data
         };
       case POST_LOGIN_FAILURE:
         return {
@@ -186,7 +202,8 @@ const initialState = {
           errorPostUser: false,
           successPostUser: true,
           access: action.payload.access,
-          messageRegister: action.payload.data.message
+          messageRegister: action.payload.data.message,
+          dataUser: action.payload.data
         };
       case POST_USER_FAILURE:
         return {
@@ -228,6 +245,17 @@ const initialState = {
           messageLogin: '',
           messageRegister: '',
           messageGoogle: '',
+          loadingPostLogin: false,
+          errorPostLogin: false,
+          successPostLogin: false,
+          access: false,
+          loadingPostUser: false,
+          errorPostUser: false,
+          successPostUser: false,
+          loadingPostTokenGoogle: false,
+          errorPostTokenGoogle: false,
+          successPostTokenGoogle: false,
+          dataUser: [],
         };
 
       default:

@@ -44,7 +44,7 @@ const Detail = () => {
 
 
   return (
-    <div className='py-40 h.full bg-gray-300 h-screen'>
+    <div className='py-40 hfull bg-gray-300 h-screen'>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
         <div className="flex flex-col md:flex-row -mx-4">
           <div className="md:flex-1 px-4">
@@ -86,14 +86,10 @@ const Detail = () => {
 
             <div className="flex py-4 space-x-4 items-center">
               <div className="relative">
-                <div className="text-center left-0 pt-2 right-0 absolute block text-xs uppercase text-black tracking-wide font-semibold">
-                  Ctd
-                </div>
-
                 <select
                   value={selectedQuantity}
                   onChange={handleQuantityChange}
-                  className="cursor-pointer appearance-none rounded-xl border border-gray-200 pl-9 pr-8 h-14 flex items-end text-center pr-5 pb-0.5"
+                  className="cursor-pointer appearance-none rounded-lg border border-gray-200 p-3 h-14 flex items-end text-center "
                 >
                   {[...Array(productById.quantity).keys()].map((num) => (
                     <option key={num + 1} value={num + 1}>

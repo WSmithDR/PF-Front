@@ -63,8 +63,23 @@ export default {
       },
       screens: {
         "wide": "1440px"
-      }
+      },
+      
     },
   },
   plugins: [],
+
+  purge: {
+    content: [
+      "./index.html",
+      "./src/**/*.{js,jsx}",
+      "./src/App"
+    ],
+    options: {
+      safelist: [
+        'bg-slate-900',
+        'text-zinc-50',
+      ],
+    },
+  },
 }

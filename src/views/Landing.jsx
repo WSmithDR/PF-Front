@@ -11,7 +11,7 @@ import Earbud from '../assets/iconsFilters/Earbuds.svg';
 import Keyboard from '../assets/iconsFilters/Keyboards.svg';
 import Mices from '../assets/iconsFilters/Mice.svg';
 import Controller from '../assets/iconsFilters/Controllers.svg';
-import refreshIcon from '../assets/icons/refreshIcon.png'
+import { IoReload } from "react-icons/io5";
 
 const categoryImages = {
   Headsets: Headset,
@@ -49,14 +49,38 @@ const LandingPage = () => {
     fetchData();
   }, [dispatch, currentPage, filters]);
 
-  const handlePageChange = (newPage) => {
-    setCurrentPage(newPage);
-    if (newPage !== 1 && newPage !== totalPages) {
-      window.scrollTo(0, 0);
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (showCategoryOptions && !event.target.closest('.select-container')) {
+        setShowCategoryOptions(false);
+      }
     };
-  };
-  
 
+    window.addEventListener('click', handleClickOutside);
+
+    return () => {
+      window.removeEventListener('click', handleClickOutside);
+    };
+  }, [showCategoryOptions]);
+
+  const scrollToTop = () => {
+    scrollTo({
+      top: 0,
+      duration: 900,
+      easing: 'easeInOutCubic',
+      behavior: 'smooth',
+    });
+  };
+
+  useEffect(() => {
+    scrollToTop();
+  }, [currentPage]);
+  
+  const handlePageChange = (newPage) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      setCurrentPage(newPage);
+    }
+  };
   const handleFilterChange = (filterName, filterValue) => {
     setFilters((prevFilters) => ({
       ...prevFilters,
@@ -64,7 +88,7 @@ const LandingPage = () => {
     }));
     setCurrentPage(1);
   };
-  
+
   const handleRefreshFilters = () => {
     setFilters({
       category: '',
@@ -79,6 +103,11 @@ const LandingPage = () => {
     }));
   };
 
+  const toggleCategoryOptions = (e) => {
+    e.stopPropagation();
+    setShowCategoryOptions(!showCategoryOptions);
+  };
+
   const categories = ["Headsets", "Microphones", "Monitors", "Mousepads", "Earbuds", "Keyboards", "Mice", "Controllers"];
 
   const itemsPerPage = 12;
@@ -89,9 +118,13 @@ const LandingPage = () => {
     paginationItems.push(
       <li key={i}>
         <button
-          className={`bg-white border border-gray-300 text-gray-500 hover:bg-gray-100 hover:text-gray-700 leading-tight py-2 px-3 ${
-            i === currentPage ? 'bg-slate-300 text-zinc-950 pointer-events-none' : ''
-          }`}
+          style={{
+            backgroundColor: i === currentPage ? '#424447' : 'white',
+            borderColor: '#718096',
+            color: i === currentPage ? '#f7fafc' : '#4a5568',
+            pointerEvents: i === currentPage ? 'none' : 'auto',
+          }}
+          className={`border border-gray-300 hover:bg-gray-100 hover:text-gray-700 leading-tight py-2 px-3`}
           onClick={() => handlePageChange(i)}
         >
           {i}
@@ -100,30 +133,25 @@ const LandingPage = () => {
     );
   }
 
-  const toggleCategoryOptions = () => {
-    setShowCategoryOptions(!showCategoryOptions);
-  };
-
   const categoriesWithAll = ["", ...categories];
 
+  const hasAppliedFilters = filters.category !== '' || filters.sale !== '3' || filters.price !== '';
+
   return (
-    <div className="relative h-full bg-blue-200">
+    <div className="relative h-full min-h-[100vh] bg-blue-200">
       <div className="relative inset-0">
         <div className="text-center pt-5 pb-0 relative">
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center " >
             <h1 className= "p-10 pb-5 text-4xl font-bold mb-0">Bienvenido</h1>
             <p className="text-lg text-gray-600 mb-3">Explora lo nuevo en tecnología</p>
 
-            <div className='m-3'>
-              <label>
-                <div className="relative inline-block">
-                  <div
-                    onClick={toggleCategoryOptions}
-                    className="flex items-center cursor-pointer"
-                  >
-                    <span className="text-gray-700 p-2 bg-gray-100 rounded-full">
+            <div className="grid grid-cols-4 gap-3 items-center m-3 " >
+              <label className="col-span-1">
+                <div className="relative inline-block select-container" onClick={toggleCategoryOptions}>
+                  <div className="flex items-center cursor-pointer">
+                    <span className="text-gray-700 p-2 bg-gray-100 rounded-tl-md rounded-bl-md">
                       {filters.category ? filters.category : "Categorias"}
-                    </span>  
+                    </span>
                     <img
                       src={
                         filters.category
@@ -131,11 +159,11 @@ const LandingPage = () => {
                           : Categories
                       }
                       alt={filters.category || "Categories"}
-                      className="w-6 h-6 ml-2 bg-gray-200 rounded-full p-1 "
+                      className="w-6 h-6 bg-gray-100 rounded-tr-md rounded-br-md p-2 "
                     />
                   </div>
                   {showCategoryOptions && (
-                    <div className="absolute mt-2 bg-white border border-gray-300 rounded-md overflow-hidden shadow-md flex flex-col">
+                    <div className="absolute mt-2 bg-white border border-gray-300 rounded-md overflow-hidden shadow-md flex flex-col" style={{ zIndex: 1000 }}>
                       {categoriesWithAll.map((category) => (
                         <div
                           key={category}
@@ -157,35 +185,45 @@ const LandingPage = () => {
                   )}
                 </div>
               </label>
-              <label className='m-10'>
+
+              <label className="col-span-1 ml-5 mr-5">
                 <select
                   value={filters.sale}
                   onChange={(e) => handleFilterChange('sale', e.target.value)}
-                  className="p-2 bg-gray-100 rounded-full"
+                  className="p-2 bg-gray-100 rounded-lg"
+                  style={{ zIndex: 1000 }}
                 >
-                  <option className='text-gray-200' value="3">Descuentos</option>
+                  <option className='text-gray-200' value={3}>Descuentos</option>
                   <option value="1">Con descuentos</option>
                   <option value="0">Sin descuentos</option>
                 </select>
               </label>
-              <label>
+
+              <label className="col-span-1">
                 <select
                   value={filters.price}
                   onChange={(e) => handleFilterChange('price', e.target.value)}
-                  className="p-2 bg-gray-100 rounded-full"
+                  className="p-2 bg-gray-100 rounded-lg"
+                  style={{ zIndex: 1000 }}
                 >
                   <option value="">Todos</option>
                   <option value="highest">Más alto</option>
                   <option value="lowest">Más bajo</option>
                 </select>
               </label>
+
+              <div className={`col-span-${hasAppliedFilters ? '1' : '0'} pr-40`}>
+                {hasAppliedFilters && filters.category !== '' && (
+                  <button
+                    onClick={handleRefreshFilters}
+                    className="p-0 bg-gray-100 rounded-full align-middle"
+                  >
+                    <IoReload className="w-6 h-6 p-1"/>
+                  </button>
+                )}
+              </div>
             </div>
-            <button 
-                onClick={handleRefreshFilters}
-                className="p-0 bg-gray-100 rounded-full"
-              ><img src={refreshIcon} alt="Refresh Icon" className="w-6 h-6" />
-              </button>
-            
+
             <div className="grid grid-cols-1 m-5 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
               {products?.map((product) => (
                 <Card
@@ -197,13 +235,13 @@ const LandingPage = () => {
                 />
               ))}
             </div>
-            
+
             <div className="max-w-2xl m-10 mx-auto">
               <nav aria-label="Page navigation example">
                 <ul className="flex justify-center -space-x-px">
                   <li>
                     <button
-                      className={`bg-white border border-gray-300 text-gray-500 hover:bg-gray-100 hover:text-gray-700 ml-0 rounded-l-lg leading-tight py-2 px-3 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''}`}                      
+                      className={`bg-white border border-gray-300 text-gray-500 hover:bg-gray-100 hover:text-gray-700 ml-0 rounded-l-lg leading-tight py-2 px-3 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
                       onClick={() => handlePageChange(currentPage - 1)}
                       disabled={currentPage === 1}
                     >
@@ -230,5 +268,4 @@ const LandingPage = () => {
   );
 };
 
-
-export default LandingPage
+export default LandingPage;

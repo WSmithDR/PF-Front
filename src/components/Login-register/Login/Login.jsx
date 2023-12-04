@@ -1,14 +1,12 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { form_style, div_style, button_disabledStyle, button_style, label_style, input_style, divButtons_style } from "./tailwindStylesLogin";
+import { h1_style, button_disabledStyle, button_style, label_style, input_style, divButtons_style } from "./tailwindStylesLogin";
 import validation from '../../../utils/Validation/ValidationLogin';
 import { postLogin } from "../../../redux/actions";
 
 const Login = () => {
-  const access = useSelector(state => state.access);
-  const success = useSelector(state => state.successPostLogin);
+  const loadingPostLogin = useSelector(state => state.loadingPostLogin);
   const error = useSelector(state => state.errorPostLogin);
-  const messageLogin = useSelector(state => state.messageLogin);
 
   const dispatch = useDispatch();
   
@@ -36,41 +34,47 @@ const Login = () => {
     event.preventDefault();
     dispatch(postLogin(userData));
   };
-
+  
   const isFormValid = !userData.email.length || !userData.password.length;
-
   return (
     <div>
-      <form onSubmit={handleSubmit} className={form_style}>
-        <div className={div_style}>
-          <label className={label_style}>Correo electrónico: </label>
-          <input
-            type="text"
-            value={userData.email}
-            name='email'
-            onChange={handleChange} 
-            placeholder=' Ingrese su email'
-            className={input_style}
-          />
-          {errors.email && <p>{errors.email}</p>}
+      { !loadingPostLogin &&
+        <h1 className={h1_style}>Inicio de sesión</h1>
+      }
+
+      { !loadingPostLogin &&
+        <form onSubmit={handleSubmit} >
+        <div class="-mx-3 md:flex mb-3">
+          <div class="md:w-full px-3">
+            <input
+              type="text"
+              value={userData.email}
+              name='email'
+              onChange={handleChange} 
+              placeholder=' Ingrese su email'
+              class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-2 px-4 mb-2 placeholder-gray-900"
+            />
+            {errors.email && <p className="text-red-900 text-xs italic text-center">{errors.email}</p>}
+          </div>
         </div>
 
-        <div className={div_style}>
-          <label className={label_style}>Contraseña: </label>
-          <input
-            type='password'
-            value={userData.password}
-            name='password'
-            onChange={handleChange}
-            placeholder=' Ingrese su contraseña'
-            className={input_style}
-          />
-          {errors.password && <p>{errors.password}</p>}
+        <div class="-mx-3 md:flex mb-3">
+          <div class="md:w-full px-3">
+            <input
+              type='password'
+              value={userData.password}
+              name='password'
+              onChange={handleChange}
+              placeholder=' Ingrese su contraseña'
+              class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-2 px-4 mb-2 placeholder-gray-900"
+            />
+            {errors.password && <p className="text-red-900 text-xs italic text-center">{errors.password}</p>}
+          </div>
         </div>
 
         <div className={divButtons_style}>
           <button
-            className={!isFormValid ? button_disabledStyle : button_style}
+            className={isFormValid ? button_disabledStyle : button_style}
             name='User'
             type="submit"
             disabled={isFormValid}
@@ -79,14 +83,14 @@ const Login = () => {
           </button>
         </div>
 
-        { success && access && (
-          <p>{messageLogin}</p>
-        )}
-        { error && (
-          <p>{error}</p>
+        {error && (
+          <div className="flex items-center justify-center mt-3 text-lg text-red-600 italic"> 
+            <p>{error}</p>
+          </div>
         )}
         
       </form>
+      }
     </div>
   );
 };

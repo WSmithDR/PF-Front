@@ -10,6 +10,7 @@ import Earbud from '../assets/iconsFilters/Earbuds.svg';
 import Keyboard from '../assets/iconsFilters/Keyboards.svg';
 import Mices from '../assets/iconsFilters/Mice.svg';
 import Controller from '../assets/iconsFilters/Controllers.svg';
+import { IoReload } from "react-icons/io5";
 
 const categoryImages = {
   Headsets: Headset,
@@ -45,7 +46,6 @@ const Searchs = () => {
   const applyFilters = () => {
     let filteredProducts = [...productsByName];
 
-    // Aplicar filtros
     if (filters.category) {
       filteredProducts = filteredProducts.filter(
         (product) => product.category === filters.category
@@ -65,7 +65,6 @@ const Searchs = () => {
       filteredProducts.sort((a, b) => a.price - b.price);
     }
 
-    // Calcular el rango de productos a mostrar en la página actual
     const itemsPerPage = 12;
     const offset = (currentPage - 1) * itemsPerPage;
     const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
@@ -98,26 +97,32 @@ const Searchs = () => {
       top: 0,
       behavior: 'smooth',
     });
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 1100);
   };
 
+  const handleRefreshFilters = () => {
+    setFilters({
+      category: '',
+      sale: '3',
+      price: '',
+    });
+  };
+
+  const hasAppliedFilters = filters.category || filters.sale !== '3' || filters.price;
+
   return (
-    <div className="relative h-full bg-blue-200">
+    <div className="relative h-full min-h-[100vh] bg-blue-200">
       <div className="relative inset-0">
         <div className="text-center pt-40 pb-0 relative">
           <div className="flex flex-col items-center">
 
-            <div className='m-3'>
-              <label>
+          <div className="grid grid-cols-4 gap-3 items-center m-3">
+            <label className="col-span-1">
               <div className="relative inline-block">
                   <div
                     onClick={toggleCategoryOptions}
                     className="flex items-center cursor-pointer"
                   >
-                    <span className="text-gray-700 p-2 bg-gray-100 rounded-full">
+                    <span className="text-gray-700 p-2 bg-gray-100 rounded-tl-md rounded-bl-md">
                       {filters.category ? filters.category : "Categorias"}
                     </span>  
                     <img
@@ -127,7 +132,7 @@ const Searchs = () => {
                           : Categories
                       }
                       alt={filters.category || "Categories"}
-                      className="w-6 h-6 ml-2 bg-gray-200 rounded-full p-1 "
+                      className="w-6 h-6 bg-gray-100 rounded-tr-md rounded-br-md p-2 "
                     />
                   </div>
                   {showCategoryOptions && (
@@ -154,11 +159,11 @@ const Searchs = () => {
                 </div>
               </label>
 
-              <label className='m-10'>
+              <label className="col-span-1 ml-5 mr-5">
                 <select
                   value={filters.sale}
                   onChange={(e) => handleFilterChange('sale', e.target.value)}
-                  className='p-2 bg-gray-100 rounded-full'
+                  className='p-2 bg-gray-100 rounded-lg'
                 >
                   <option className='text-gray-200' value='3'>
                     Descuentos
@@ -167,17 +172,29 @@ const Searchs = () => {
                   <option value='0'>Sin descuentos</option>
                 </select>
               </label>
-              <label>
+              
+              <label className="col-span-1">
                 <select
                   value={filters.price}
                   onChange={(e) => handleFilterChange('price', e.target.value)}
-                  className='p-2 bg-gray-100 rounded-full'
+                  className='p-2 bg-gray-100 rounded-lg'
                 >
                   <option value=''>Todos</option>
                   <option value='highest'>Más alto</option>
                   <option value='lowest'>Más bajo</option>
                 </select>
               </label>
+
+              <div className={`col-span-${hasAppliedFilters ? '1' : '0'} pr-40`}>
+                {hasAppliedFilters && (
+                  <button 
+                    onClick={handleRefreshFilters}
+                    className="p-0 bg-gray-100 rounded-full align-middle"
+                  > 
+                    <IoReload className="w-6 h-6 p-1"/>
+                  </button>
+                )}
+              </div>
             </div>
 
             <div className="grid grid-cols-1 m-5 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
@@ -209,9 +226,13 @@ const Searchs = () => {
                   {Array.from({ length: totalPages }).map((_, i) => (
                     <li key={i}>
                       <button
-                        className={`bg-white border border-gray-300 text-gray-500 hover:bg-gray-100 hover:text-gray-700 leading-tight py-2 px-3 ${
-                          i + 1 === currentPage ? 'bg-slate-300 text-zinc-950 pointer-events-none' : ''
-                        }`}
+                        style={{
+                          backgroundColor: i + 1 === currentPage ? '#424447' : 'white', 
+                          borderColor: '#718096',
+                          color: i + 1 === currentPage ? '#f7fafc' : '#4a5568', 
+                          pointerEvents: i + 1 === currentPage ? 'none' : 'auto',
+                        }}
+                        className={`border border-gray-300 hover:bg-gray-100 hover:text-gray-700 leading-tight py-2 px-3`}
                         onClick={() => handlePageChange(i + 1)}
                       >
                         {i + 1}
