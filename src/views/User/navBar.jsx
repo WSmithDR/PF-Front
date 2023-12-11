@@ -4,14 +4,11 @@ import { Button } from "antd";
 import AuthModal from "../../components/AuthModal";
 import SearchBar from "../../components/SearchBar";
 import LOGO from "../../assets/LOGO.png";
-import { RiLogoutBoxRLine } from "react-icons/ri";
 import { LuShoppingCart } from "react-icons/lu";
-import { FaRegUser } from "react-icons/fa";
-import { clearData, getUserByID } from "../../redux/actions";
+import { getUserByID } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
-import { MdOutlineSpaceDashboard } from "react-icons/md";
 import { jwtDecode } from "jwt-decode";
-import { BiPurchaseTag } from "react-icons/bi";
+import UserIcon from "../../components/UserIcon";
 
 const NavBar = () => {
   const dispatch = useDispatch();
@@ -50,7 +47,6 @@ const NavBar = () => {
   const isUserLoggedIn = !!localStorage.getItem("token");
   const isAdmin = userData && userData.Admin;
 
-
   useEffect(() => {
     fetchData(); 
   }, []);  
@@ -64,11 +60,6 @@ const NavBar = () => {
     dispatch(clearData());
     navigate("/home");
   };
-
-  if (!userData) {
-    return <div>Loading...</div>;
-  }
-  
 
   return (
     <nav className="fixed top-0 w-full bg-blue1 shadow-md z-40 px-[5vw] flex items-center justify-between p-2">
@@ -86,31 +77,6 @@ const NavBar = () => {
       </div>
 
       <div className="flex items-center space-x-4">
-        {isUserLoggedIn && isAdmin && (
-          <MdOutlineSpaceDashboard
-            className="w-[50px] h-[50px] cursor-pointer hover:text-gray-100"
-            onClick={() => navigate("/dashboard")}
-            title="Dashboard"
-          />
-        )}
-
-        {isUserLoggedIn && !isAdmin && (
-          <BiPurchaseTag
-            className="w-[40px] h-[40px] cursor-pointer hover:text-gray-100"
-            title="Mis compras"
-            onClick={() => navigate("/profile/purchase")}
-          />
-        )}
-
-        {isUserLoggedIn && !isAdmin && (
-          <FaRegUser
-            className="w-[40px] h-[40px] cursor-pointer hover:text-gray-100"
-            title="User"
-            onClick={() => navigate("/profile")}
-          />
-        )}
-
-        
         <div style={{ position: 'relative' }}>
           <LuShoppingCart
               className="w-[40px] h-[40px] cursor-pointer hover:text-gray-100"
@@ -125,13 +91,9 @@ const NavBar = () => {
         </div>
 
         {isUserLoggedIn ? (
-          <button
-            className="hover:text-gray-100 text-gray4 font-pop-light text-xl bg-transparent border-none shadow-none navbutton"
-            type="button"
-            onClick={handleLogout}
-          >
-            <RiLogoutBoxRLine className="w-[40px] h-[40px] cursor-pointer" title="Logout" />
-          </button>
+          <div className='pl-0'>
+            <UserIcon />
+          </div>
         ) : (
           <Button
             className="text-gray4 font-pop-light text-xl bg-transparent border-none shadow-none navbutton"

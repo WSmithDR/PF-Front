@@ -102,6 +102,7 @@ const Profile = () => {
       <div className="p-5 rounded-xl bg-blue-200 shadow mt-9 h-full">
         <div className="grid grid-cols-1 md:grid-cols-3">
           <div className="grid grid-cols-3 text-center order-last md:order-first mt-10 md:mt-0">
+
             <div className='cursor-pointer bg-gray-900 hover:bg-gray-700 rounded-lg mr-1 hover-text-gray-900'onClick={handleSectionChange}>
               <p className="text-gray-50 text-xl">{quantityProducts}</p>
               <p className="font-bold pb-1 text-gray-50">Creados</p>
@@ -192,7 +193,7 @@ const Profile = () => {
                   value={name} 
                   onChange={(e) => setName(e.target.value)} 
                   placeholder={userData.name}
-                  className="appearance-none w-72 text-white bg-gray-900 text-grey-darker border border-red rounded-lg py-1 px-4  placeholder-gray-900 text-center"
+                  className="appearance-none w-72 text-white bg-gray-900 text-grey-darker border border-red rounded-lg py-1 px-4  placeholder-gray-500 text-center"
                 />
               ) : (
                 userData.name
@@ -206,7 +207,7 @@ const Profile = () => {
                   value={email} 
                   onChange={(e) => setEmail(e.target.value)} 
                   placeholder={userData.email}
-                  className="appearance-none w-72 text-white bg-gray-900 text-grey-darker border border-red rounded-lg py-1 px-4  placeholder-gray-900 text-center"
+                  className="appearance-none w-72 text-white bg-gray-900 text-grey-darker border border-red rounded-lg py-1 px-4  placeholder-gray-500 text-center"
                 />
               ) : (
                 userData.email
@@ -220,7 +221,7 @@ const Profile = () => {
                     value={number || ''} 
                     onChange={(e) => setNumber(e.target.value)} 
                     placeholder={userData.number || 'Escribe tu numero de telefono'}
-                    className="appearance-none w-72 text-white bg-gray-900 text-grey-darker border border-red rounded-lg py-1 px-4  placeholder-gray-900 text-center"
+                    className="appearance-none w-72 text-white bg-gray-900 text-grey-darker border border-red rounded-lg py-1 px-4  placeholder-gray-500 text-center"
                   />
                 </p>
               ) : (
@@ -239,7 +240,7 @@ const Profile = () => {
                     value={address} 
                     onChange={(e) => setAddress(e.target.value)} 
                     placeholder={userData.address || 'Escribe tu direccion'}
-                    className="appearance-none w-72 text-white bg-gray-900 text-grey-darker border border-red rounded-lg py-1 px-4  placeholder-gray-900 text-center"
+                    className="appearance-none w-72 text-white bg-gray-900 text-grey-darker border border-red rounded-lg py-1 px-4  placeholder-gray-500 text-center"
                   />
                 </p>
               ) : (
@@ -257,7 +258,7 @@ const Profile = () => {
                     value={password} 
                     onChange={(e) => setPassword(e.target.value)} 
                     placeholder={userData.password ? '*****' : 'No hay contraseña'}
-                    className="appearance-none w-72 text-white bg-gray-900 text-grey-darker border border-red rounded-lg py-1 px-4 mb-1 placeholder-gray-900 text-center"
+                    className="appearance-none w-72 text-white bg-gray-900 text-grey-darker border border-red rounded-lg py-1 px-4 mb-1 placeholder-gray-500 text-center"
                   />
                 </p>
               ) : (

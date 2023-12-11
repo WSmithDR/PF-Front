@@ -23,7 +23,6 @@ const ProfileUser = () => {
   }, [dispatch, userId]);
 
   useEffect(() => {
-    setAdmin(userData.Admin); 
     setImg(userData.img || '');
     setName(userData.name || '');
     setEmail(userData.email || '');
@@ -36,7 +35,6 @@ const ProfileUser = () => {
 
   const [img, setImg] = useState(userData.img);
   const [name, setName] = useState(userData.name);
-  const [admin, setAdmin] = useState(userData.Admin); 
   const [email, setEmail] = useState(userData.email);
   const [number, setNumber] = useState(userData.number);
   const [address, setAddress] = useState(userData.address);
@@ -51,10 +49,6 @@ const ProfileUser = () => {
 
     if (name !== userData.name) {
       updatedData.name = name;
-    }
-
-    if (admin !== userData.admin) {
-      updatedData.admin = admin;
     }
 
     if (email !== userData.email) {
@@ -92,7 +86,6 @@ const ProfileUser = () => {
   const isDataChanged = () => {
     return (
       name !== userData.name ||
-      admin !== userData.Admin ||
       email !== userData.email ||
       number !== userData.number ||
       address !== userData.address ||
@@ -106,15 +99,20 @@ const ProfileUser = () => {
       <div className="p-5 rounded-xl bg-blue-200 shadow mt-8 h-full">
         <div className="grid grid-cols-1 md:grid-cols-3">
           <div className="grid grid-cols-3 text-center order-last md:order-first mt-10 md:mt-0">
-            <div className="cursor-pointer"
+
+            <div 
+              className='cursor-pointer bg-gray-900 hover:bg-gray-700 rounded-lg mr-1 hover-text-gray-900'
               onClick={() => navigate('/profile/purchase')}
             >
-              <p className="font-bold text-gray-700 text-xl">{quantityPurchases}</p>
-              <p className="text-gray-500">Mis compras</p>
+              <p className="text-gray-50 text-xl">{quantityPurchases}</p>
+              <p className="font-bold pb-1 text-gray-50">Mis compras</p>
             </div>
-            <div>
-              <p className="font-bold text-gray-700 text-xl">0</p>
-              <p className="text-gray-500">Mis opiniones</p>
+
+            <div 
+              className='cursor-pointer bg-gray-900 hover:bg-gray-700 rounded-lg mr-1 hover-text-gray-900'
+            >
+              <p className="text-gray-50 text-xl">0</p>
+              <p className="font-bold pb-1 text-gray-50">Mis opiniones</p>
             </div>
           </div>
 
@@ -190,7 +188,7 @@ const ProfileUser = () => {
                 value={name} 
                 onChange={(e) => setName(e.target.value)} 
                 placeholder={userData.name}
-                className="appearance-none w-72 text-white bg-gray-900 text-grey-darker border border-red rounded-lg px-4  placeholder-gray-900 text-center"
+                className="appearance-none w-72 text-white bg-gray-900 text-grey-darker border border-red rounded-lg px-4  placeholder-gray-500 text-center"
               />
             ) : (
               userData.name
@@ -204,7 +202,7 @@ const ProfileUser = () => {
                 value={email} 
                 onChange={(e) => setEmail(e.target.value)} 
                 placeholder={userData.email}
-                className="appearance-none w-72 text-white bg-gray-900 text-grey-darker border border-red rounded-lg py-1 px-1  placeholder-gray-900 text-center"
+                className="appearance-none w-72 text-white bg-gray-900 text-grey-darker border border-red rounded-lg py-1 px-1  placeholder-gray-500 text-center"
               />
             ) : (
               userData.email
@@ -219,7 +217,7 @@ const ProfileUser = () => {
                 value={number || ''} 
                 onChange={(e) => setNumber(e.target.value)} 
                 placeholder={userData.number || 'Escribe tu numero de telefono'}
-                className="appearance-none w-72 text-white bg-gray-900 text-grey-darker border border-red rounded-lg py-1 px-4  placeholder-gray-900 text-center"
+                className="appearance-none w-72 text-white bg-gray-900 text-grey-darker border border-red rounded-lg py-1 px-4  placeholder-gray-500 text-center"
               />
             </p>
           ) : (
@@ -237,7 +235,7 @@ const ProfileUser = () => {
                 value={address} 
                 onChange={(e) => setAddress(e.target.value)} 
                 placeholder={userData.address || 'Escribe tu direccion'}
-                className="appearance-none w-72 text-white bg-gray-900 text-grey-darker border border-red rounded-lg py-1 px-4  placeholder-gray-900 text-center"
+                className="appearance-none w-72 text-white bg-gray-900 text-grey-darker border border-red rounded-lg py-1 px-4  placeholder-gray-500 text-center"
               />
             </p>
           ) : (
@@ -255,7 +253,7 @@ const ProfileUser = () => {
                 value={password} 
                 onChange={(e) => setPassword(e.target.value)} 
                 placeholder={userData.password ? '*****' : 'No hay contraseña'}
-                className="appearance-none w-72 text-white bg-gray-900 text-grey-darker border border-red rounded-lg py-1 px-4 mb-1 placeholder-gray-900 text-center"
+                className="appearance-none w-72 text-white bg-gray-900 text-grey-darker border border-red rounded-lg py-1 px-4 mb-1 placeholder-gray-500 text-center"
               />
             </p>
           ) : (
@@ -263,32 +261,6 @@ const ProfileUser = () => {
               <p className="mt-5 text-xl text-gray-700">***********</p>
             ) : (
               <p className="mt-5 text-xl text-gray-700">No hay contraseña</p>
-            )
-          )}
-
-          {editMode ? (
-            <div className="justify-center items-center mt-1 cursor-pointer cm-toggle-wrapper ">
-              <p className="text-3xl">Admin</p>
-              <div
-                onClick={() => setAdmin(!admin)} 
-                className="flex justify-center items-center cursor-pointer cm-toggle-wrapper mb-0"
-              >
-                <span className={`font-semibold text-xl ${admin ? 'text-gray-500' : 'text-red-800'} mr-1`}>No</span>
-                <div className={`rounded-full w-10 h-5 p-0.5 bg-gray-900 ${admin ? 'bg-green-500' : 'bg-gray-900'}`}>
-                  <div
-                    className={`rounded-full w-4 h-4 bg-white transform duration-300 ease-in-out ${
-                      admin ? 'translate-x-6' : 'translate-x-0'
-                    }`}
-                  ></div>
-                </div>
-                <span className={`font-semibold text-xl ${admin ? 'text-green-500' : 'text-gray-500'} ml-1`}>Si</span>
-              </div>
-            </div>
-          ) : (
-            userData.Admin  ? (
-              <p className="mt-5 text-xl text-gray-700">Eres un administrador</p>
-            ) : (
-              <p className="mt-5 text-xl text-gray-700">No eres administrador</p>
             )
           )}
 
