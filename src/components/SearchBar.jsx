@@ -37,7 +37,7 @@ const SearchBar = () => {
               value={searchTerm}
               onChange={handleInputChange}
             />
-            <button className="bg-blue-500 p-1 rounded-tr-lg rounded-br-lg text-white font-semibold hover:bg-blue-800 transition-colors" onClick={handleClick}>Buscar</button> 
+            <button className="bg-gray-900 p-1 rounded-tr-lg rounded-br-lg text-white font-semibold hover:bg-gray-500 transition-colors" onClick={handleClick}>Buscar</button> 
         </div>
       </div>
     </div>
