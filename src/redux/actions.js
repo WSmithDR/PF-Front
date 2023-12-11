@@ -214,7 +214,7 @@ export function finishPurchase(objectPago) {
      window.location.href = response.data.init_point;
 
      dispatch({
-       type: FINISH_PURCHASE,afsdfgs
+       type: FINISH_PURCHASE, //afsdfgs
 
        payload: response.data,
      });
