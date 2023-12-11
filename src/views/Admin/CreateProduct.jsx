@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 const CreateProduct = () => {
 
   const [errors, setErrors] = useState({});
+  const [errorBack, setErrorBack] = useState('');
   const [success, setSuccess] = useState(false); 
   const [message, setMessage] = useState('');
   const [product, setProduct] = useState({
@@ -54,11 +55,22 @@ const CreateProduct = () => {
         },
       })
       setMessage(data.message);
-      console.log(data);
     } catch (error) {
       console.log(error);
+      setErrorBack(error.response.data.message);
     }
   };
+
+  if (errorBack !== '') {
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops..',
+      text:  errorBack || 'Tipo de imagen no permitida',
+    });
+    setErrorBack('');
+  }
+
+  console.log(errorBack);
 
   const isFormValid =
   product.img === null ||
@@ -93,9 +105,6 @@ const CreateProduct = () => {
       quantity: 0
     })
   }
-
-  console.log(message);
-  console.log(success);
 
   return (
     <div className="pl-72 ml-10 pr-10 p-9 pb-10 pt-10 min-h-[80vh] bg-gray-900">        

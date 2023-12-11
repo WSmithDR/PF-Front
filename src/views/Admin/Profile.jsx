@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserData, putUserData, getAdminProducts } from "../../redux/actions";
 import ProductCreated from './ProductCreated';
+import { NavLink } from 'react-router-dom';
 
 const Profile = () => {
   const token = localStorage.getItem('token');
@@ -120,7 +121,7 @@ const Profile = () => {
           <div className="relative">
             <div  className="w-48 h-48 bg-indigo-100 mx-auto rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-24 flex items-center justify-center overflow-hidden">
             {editMode ? (
-              <div>
+              <div  className="w-48 h-48 bg-indigo-100 mx-auto rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-0 flex items-center justify-center overflow-hidden">
                 <input
                   type="file"
                   accept="image/*"
@@ -274,6 +275,17 @@ const Profile = () => {
         { sectionMyProducts === true &&
           <div className='pt-10 '>
             <ProductCreated />
+          </div>
+        }
+
+        { quantityProducts === 0 && sectionMyProducts === true &&
+          <div className='text-center'>
+            <h2 className='text-3xl pt-10 pb-5'>No tienes productos creados.</h2>
+            <NavLink to={'/dashboard/create'}>
+              <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg'>
+                Crear producto
+              </button>
+            </NavLink>
           </div>
         }
         

@@ -109,6 +109,8 @@ const Searchs = () => {
 
   const hasAppliedFilters = filters.category || filters.sale !== '3' || filters.price;
 
+  console.log(productsByName);
+
   return (
     <div className="relative h-full min-h-[100vh] bg-blue-200">
       <div className="relative inset-0">
@@ -253,6 +255,14 @@ const Searchs = () => {
               </nav>
             </div>
             )}
+
+            { productsByName.length === 0 && (
+                <div>
+                  <h2 className='text-4xl'>No hay resultados</h2>
+                </div>
+              )
+            }
+
           </div>
         </div>
       </div>

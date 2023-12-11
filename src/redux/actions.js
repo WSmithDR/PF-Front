@@ -117,7 +117,6 @@ export function getProductsById(_id) {
    });
  };
 }
-
 export function restoreProduct(id) {
  return async function (dispatch) {
    const restoredProduct = await axios.put(`${URL}/product/restore/${id}`, { headers: { 'Cache-Control': 'no-cache' }});
@@ -127,7 +126,6 @@ export function restoreProduct(id) {
    });
  };
 }
-
 export function updateProduct(payload) {
  return async function (dispatch) {
    console.log(payload.id);
@@ -140,7 +138,6 @@ export function updateProduct(payload) {
    });
  };
 }
-
 export function getDeletedProducts() {
  return async function (dispatch) {
    const getDeletedProducts = await axios.get(`${URL}/product/deleted`, { headers: { 'Cache-Control': 'no-cache' }});
