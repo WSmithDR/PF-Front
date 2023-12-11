@@ -61,7 +61,7 @@ const NavBar = () => {
   };
 
   return (
-    <nav className="fixed top-0 w-full bg-blue1 shadow-md z-40 px-[5vw] flex items-center justify-between p-2">
+    <nav className="fixed top-0 w-full bg-gray-700 shadow-md z-40 px-[5vw] flex items-center justify-between p-2">
       <div className="flex items-center">
         <img
           className="bg-gray-50 rounded-lg w-[50px] h-[50px] cursor-pointer"
@@ -78,7 +78,7 @@ const NavBar = () => {
       <div className="flex items-center space-x-4">
         <div style={{ position: 'relative' }}>
           <LuShoppingCart
-              className="w-[40px] h-[40px] cursor-pointer hover:text-gray-100"
+              className="w-[40px] h-[40px] text-blue-300 cursor-pointer hover:text-gray-100"
               onClick={() => navigate("/shoppingCart")}
               title="Cart"
             />

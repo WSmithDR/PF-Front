@@ -25,24 +25,24 @@ const Product = ({ price, img, name, _id, description, sales }) => {
   };
 
  return (
-    <div className={'group bg-stone-950 text-white shadow duration-150 rounded-2xl  hover:scale-105 hover:shadow-md'}>
+    <div className={'group bg-gray-950 text-white shadow duration-150 rounded-2xl  hover:scale-105 hover:shadow-md'}>
       <NavLink  to={`/detail/${_id}`}>     
         <div className='aspect-h-1 aspect-w-1 w-full rounded-tl-2xl rounded-tr-2xl overflow-hidden xl:aspect-h-8 xl:aspect-w-7 '>
-          <img className='h-full p-3 w-full bg-stone-700 object-cover object-center ' src={img} alt={`${name} image`} />
+          <img className='h-full p-3 w-full bg-gray-700 object-cover object-center ' src={img} alt={`${name} image`} />
         </div>
         
         <h3 className='my-4 pl-4 font-bold text-black-500'>{name}</h3>
 
         <div class="flex mb-3 items-center">
           <p className='ml-4 text-xl font-semibold text-gray-300'>${price}</p>
-          <p class="ml-auto text-base pr-5 py-auto my-auto font-medium text-green-500">${sales} off</p>
+          {sales !== 0 && <p class="ml-auto text-base pr-5 py-auto my-auto font-medium text-green-500">${sales} off</p>}
         </div>
       </NavLink>
 
       <div class="p-3 pb-5 pt-0">
         <button
           onClick={handleAddToCart}
-          class="block w-full select-none rounded-lg  py-3 px-6 text-center align-middle font-sans bg-black text-xs font-bold uppercase transition-all hover:bg-gray-950 hover:scale-105 focus:scale-105 focus:opacity-[0.85] active:scale-100 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+          class="block w-full select-none rounded-lg  py-3 px-6 text-center align-middle font-sans bg-gray-900 text-xs font-bold uppercase transition-all hover:bg-gray-800 hover:scale-105 focus:scale-105 focus:opacity-[0.85] active:scale-100 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
           type="button"
         >
           Añadir al carrito
