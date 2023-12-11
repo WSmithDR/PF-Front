@@ -5,18 +5,21 @@ import ButtonLoginGoogle from "./ButtonLoginGoogle";
 import LOGO from "../../assets/LOGO.png";
 import { useSelector, useDispatch } from "react-redux";
 import Spinner from "../Spinner";
-import { clearData } from "../../redux/actions";
+import { clearData, getUserData } from "../../redux/actions";
 import { useNavigate, useLocation } from "react-router-dom";
+import { jwtDecode } from 'jwt-decode';
 
 function LoginRegister() {
   const successPostTokenGoogle = useSelector((state) => state.successPostTokenGoogle);
   const successPostUser = useSelector((state) => state.successPostUser);
   const successPostLogin = useSelector((state) => state.successPostLogin);
+  const successGetUserData = useSelector((state) => state.successGetUserData);
 
   const loadingPostUser = useSelector((state) => state.loadingPostUser);
   const loadingPostLogin = useSelector((state) => state.loadingPostLogin);
+  const loadingGetUserData = useSelector((state) => state.loadingGetUserData);
 
-  const dataUser = useSelector((state) => state.dataUser);
+  const userData = useSelector((state) => state.userData);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -40,20 +43,38 @@ function LoginRegister() {
     dispatch(clearData());
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      if (successPostLogin || successPostUser || successPostTokenGoogle) {
+        const token = localStorage.getItem('token');
+        const decodedToken = jwtDecode(token);
+        const userId = decodedToken.id;
+
+        setShowLogin(false);
+        setShowRegister(false);
+
+        await dispatch(getUserData(userId));
+      }
+    };
+
+    fetchData();
+  }, [dispatch, successPostLogin, successPostUser, successPostTokenGoogle]);
+
+
   const isFormSelected = showRegister || showLogin;
 
   useEffect(() => {
     if ((successPostTokenGoogle || successPostUser || successPostLogin) && location.pathname === '/') {
+    
       navigate('/home');
     }
   }, [successPostTokenGoogle, successPostUser, successPostLogin, location.pathname, navigate]);
 
-
   return (
     <div>
-        { (successPostTokenGoogle || successPostUser || successPostLogin) && (
+        { (successGetUserData) && (
           <div className="flex items-center justify-center">
-            <img className="h-[200px] w-[200px] rounded-lg m-0" src={dataUser.img ? dataUser.img : 'https://icons.veryicon.com/png/o/internet--web/prejudice/user-128.png'} alt={`Imagen de perfil de ${dataUser.name}`} />
+            <img className="h-[200px] w-[200px] rounded-lg m-0" src={userData.img ? userData.img : 'https://icons.veryicon.com/png/o/internet--web/prejudice/user-128.png'} alt={`Imagen de perfil de ${userData.name}`} />
           </div>
         )}
 
@@ -78,8 +99,8 @@ function LoginRegister() {
       }
 
       <div className="mt-1">
-        {showRegister && !successPostUser && <Register />}
-        {showLogin && !showRegister && !successPostLogin && <Login />}
+        {showRegister && !successPostUser && successGetUserData === false && <Register />}
+        {showLogin && !showRegister && !successPostLogin && loadingGetUserData === false && <Login />}
       </div>
 
       { !successPostTokenGoogle && !successPostUser && !successPostLogin &&
@@ -99,16 +120,16 @@ function LoginRegister() {
       </div>
       }
 
-      { (successPostTokenGoogle || successPostUser || successPostLogin) && (
+      { (successGetUserData) && (
         <div>
           <div className="flex items-center justify-center pt-5">
-            <h2 className="text-3xl ">¡Bienvenido <span className="text-sky-600">{dataUser.name}</span>!</h2>
+            <h2 className="text-3xl ">¡Bienvenido <span className="text-sky-600">{userData.name}</span>!</h2>
           </div>
           <h3 className="flex items-center pt-5 justify-center text-xl">Continua navegando</h3>
         </div>
       )}
 
-      { loadingPostUser || loadingPostLogin &&
+      { loadingPostUser || loadingPostLogin || loadingGetUserData &&
         <div className="flex items-center justify-center m-10">
           <Spinner/>
         </div>

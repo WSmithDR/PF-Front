@@ -121,14 +121,14 @@ const reducer = (state = initialState, action) => {
         localstorage: [action.payload],
       };
   
-      case 'REMOVE_FROM_CART':
-        const productIdToRemove = action.payload;
-        const updatedCartAfterRemoval = state.cart.filter(item => item.id !== productIdToRemove);
-        localStorage.setItem('cart', JSON.stringify(updatedCartAfterRemoval));
-        return {
-          ...state,
-          cart: updatedCartAfterRemoval,
-        };
+    case REMOVE_FROM_CART:
+      const productIdToRemove = action.payload;
+      const updatedCartAfterRemoval = state.cart.filter(item => item.id !== productIdToRemove);
+      localStorage.setItem('cart', JSON.stringify(updatedCartAfterRemoval));
+      return {
+        ...state,
+        cart: updatedCartAfterRemoval,
+      };
     case FINISH_PURCHASE:
       return {
         ...state,
@@ -184,7 +184,6 @@ const reducer = (state = initialState, action) => {
         successPostLogin: true,
         access: action.payload.access,
         messageLogin: action.payload.data.message,
-        dataUser: action.payload.data
       };
     case POST_LOGIN_FAILURE:
       return {
@@ -209,7 +208,6 @@ const reducer = (state = initialState, action) => {
         successPostUser: true,
         access: action.payload.access,
         messageRegister: action.payload.data.message,
-        dataUser: action.payload.data
       };
     case POST_USER_FAILURE:
       return {
@@ -233,7 +231,6 @@ const reducer = (state = initialState, action) => {
         errorPostTokenGoogle: false,
         successPostTokenGoogle: true,
         access: action.payload.access,
-        dataUser: action.payload.data,
         messageGoogle: action.payload.data.message
       };
     case SEND_TOKEN_GOOGLE_FAILURE:
@@ -260,7 +257,10 @@ const reducer = (state = initialState, action) => {
         loadingPostTokenGoogle: false,
         errorPostTokenGoogle: false,
         successPostTokenGoogle: false,
-        dataUser: [],
+        userData: [],
+        loadingGetUserData: false,
+        errorGetUserData: false,
+        successGetUserData: false,
       };
 
     case POST_MESSAGE_REQUEST:

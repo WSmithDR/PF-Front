@@ -2,9 +2,11 @@ import React, { useState, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { clearData } from "../redux/actions";
+import AuthModal from "../components/AuthModal";
 
 const UserIcon = () => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -46,6 +48,10 @@ const UserIcon = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isDropdownVisible]);
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <div style={{ position: 'relative' }}>
@@ -116,6 +122,7 @@ const UserIcon = () => {
           </div>
         </div>
       )}
+      <AuthModal isOpen={isModalOpen} onClose={handleCancel} onLogout={handleLogout} />
     </div>
   );
 };
