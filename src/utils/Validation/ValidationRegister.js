@@ -16,8 +16,8 @@ const validation = (userData) => {
   if (userData.password.length <= 8 && userData.password.length > 0) {
     errors.password = 'La contraseña debe tener al menos 8 caracteres.';
   }
-  if(!userData.phoneNumber) {
-    errors.phoneNumber = "Debe ingresar un número de celular."
+  if(!userData.number) {
+    errors.number = "Debe ingresar un número de celular."
   }
   if(!userData.name) {
     errors.name = 'Debe haber un nombre.'

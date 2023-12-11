@@ -1,21 +1,30 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {jwtDecode} from 'jwt-decode';
-import { useSelector, useDispatch } from 'react-redux';
-import { removeFromCart, finishPurchase } from '../redux/actions';
+import { useDispatch } from 'react-redux';
+import { finishPurchase } from '../redux/actions';
 import Swal from 'sweetalert2';
-import LoginRegister from "../components/Login-register/LoginRegister";
+import AuthModal from "../components/AuthModal";
+import PurchaseCard from '../components/PurchaseCard';
 
 const ShoppingCart = () => {
   const dispatch = useDispatch();
-  const cartItems = useSelector((state) => state.cart);
-  console.log('cartItems:', cartItems);
-  const [showLogin, setShowLogin] = useState(false);
+  const storedCartItems = JSON.parse(localStorage.getItem('cart')) || [];
+  const [cartItems, setCartItems] = useState(storedCartItems);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(cartItems));
+  }, [cartItems]);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
 
   const isUserLoggedIn = !!localStorage.getItem("token");
-
-  const handleRemoveFromCart = (productById) => {
-    dispatch(removeFromCart(productById));
-  };
 
   const totalAmount = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
@@ -29,7 +38,7 @@ const ShoppingCart = () => {
         cancelButtonText: 'Cancelar',
       }).then((result) => {
         if (result.isConfirmed) {
-          setShowLogin(true);
+          showModal();
         }
       });
       return;
@@ -48,70 +57,62 @@ const ShoppingCart = () => {
       ...item,
       productId: item.id,
       unit_price: item.price,
-      currency_id: 'MEX',
+      currency_id: 'ARG',
       userId: userId
     }));
 
     dispatch(finishPurchase(objetoPago));
-    Swal.fire('Compra completada');
-    setShowLogin(true);
+    Swal.fire('Compra en proceso');
+    handleCancel();
+    setCartItems([]);
   };
 
   return (
-    <div className="relative bg-blue-200">
-      <div className="text-center py-10 bg-blue-200 h-screen">
-        <h2 className="text-3xl font-bold text-black mb-4">Tu carrito</h2>
+    <div className="relative h-creen bg-blue-200">
+      <div className="text-center h-screen py-10 ">
+        <h2 className="text-3xl justify-center align-center font-bold mt-3 text-black">Tu carrito</h2>
         {cartItems.length === 0 ? (
-          <p className="text-black">Tu carrito esta vacio</p>
+          <p className="text-black text-4xl pt-10 mt-10">Tu carrito esta vacio :(</p>
         ) : (
-          <table className="w-full border-collapse">
-            <thead>
+          <table className="table p-5 text-gray-400 text-center border-separate space-y-6 rounded-md text-sm">
+            <thead className="bg-gray-800 text-gray-500 rounded-md">
               <tr>
-                <th className="border p-2">Producto</th>
-                <th className='border p-2'>Cantidad</th>
-                <th className="border p-2">Precio</th>
-                <th className="border p-2">Cancelar</th>
+                <th className="p-3 text-gray-300 w-screen text-center">Nombre</th>
+                <th className="p-3 text-gray-300 w-screen text-center">Cantidad</th>
+                <th className="p-3 text-gray-300 w-screen text-center">Precio</th>
+                
               </tr>
             </thead>
             <tbody>
-              {cartItems.map((item) => (
-                <tr key={item.id}>
-                  <td className="border p-2 flex items-center">
-                    <img
-                      src={item.image}
-                      alt={item.productName}
-                      className="w-12 h-12 object-cover rounded mr-2"
-                    />
-                    {item.title}
-                  </td>
-                  <td className="border p-2">{item.quantity}</td>
-                  <td className="border p-2">${item.price}</td>
-                  <td className="border p-2">
-                    <button
-                      onClick={() => handleRemoveFromCart(item.id)}
-                      className="text-black"
-                    >
-                      Remove
-                    </button>
-                  </td>
-                </tr>
+            {cartItems.map((item) => (
+                  <PurchaseCard 
+                    key={item.id}
+                    img={item.image}
+                    name={item.title}
+                    price={item.price}
+                    quantity={item.quantity}
+                    cart={true}
+                    _id={item.id}
+                  />
               ))}
               <tr>
-                <td className="border p-2"></td>
-                <td className="border p-2 font-bold">Total a pagar:</td>
-                <td className="border p-2 font-bold">${totalAmount}</td>
+                <td className="border bg-gray-800 text-2xl p-2 text-white">Total a pagar: <span className='font-bold'>${totalAmount}</span></td>
               </tr>
             </tbody>
           </table>
         )}
-        <div className="relative bg-blue-200 text-center">
-          <button
-            onClick={handleFinishPurchase}
-            className="bg-blue-500 text-white px-4 py-2 rounded focus:outline-none hover:bg-blue-600"
-          >
-            Comprar
-          </button>
-          {showLogin && <LoginRegister />}
+        <div className="relative text-2xl rounded-xl text-center mt-3">
+          { cartItems.length > 0 &&
+            <button
+              disabled={cartItems.length === 0}
+              onClick={handleFinishPurchase}
+              className={`px-4 py-2 rounded focus:outline-none hover:bg-blue-600 bg-blue-500 text-white
+              ${cartItems.length === 0 ? 'opacity-50 cursor-not-allowed' : ' text-white'}`}
+            >
+              Comprar
+            </button>
+          }
+          <AuthModal isOpen={isModalOpen} onClose={handleCancel} />
         </div>
       </div>
     </div>

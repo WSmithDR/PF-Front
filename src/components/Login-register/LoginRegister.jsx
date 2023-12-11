@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Register from "../Login-register/Register/Register";
 import Login from "../Login-register/Login/Login";
 import ButtonLoginGoogle from "./ButtonLoginGoogle";
@@ -6,6 +6,7 @@ import LOGO from "../../assets/LOGO.png";
 import { useSelector, useDispatch } from "react-redux";
 import Spinner from "../Spinner";
 import { clearData } from "../../redux/actions";
+import { useNavigate, useLocation } from "react-router-dom";
 
 function LoginRegister() {
   const successPostTokenGoogle = useSelector((state) => state.successPostTokenGoogle);
@@ -18,6 +19,8 @@ function LoginRegister() {
   const dataUser = useSelector((state) => state.dataUser);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const [showRegister, setShowRegister] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
@@ -38,6 +41,13 @@ function LoginRegister() {
   };
 
   const isFormSelected = showRegister || showLogin;
+
+  useEffect(() => {
+    if ((successPostTokenGoogle || successPostUser || successPostLogin) && location.pathname === '/') {
+      navigate('/home');
+    }
+  }, [successPostTokenGoogle, successPostUser, successPostLogin, location.pathname, navigate]);
+
 
   return (
     <div>

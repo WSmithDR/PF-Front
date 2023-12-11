@@ -13,11 +13,12 @@ const Register = () => {
   const [errors, setErrors] = useState({});
   const [userData, setUserData] = useState({
     name: '',
-    phoneNumber: '',
+    number: '',
     img: '',
     email: '',
     password: '',
-    address: ''
+    address: '',
+    Admin: false
   });
 
   const handleChange = (event) => {
@@ -34,6 +35,12 @@ const Register = () => {
     }));
   };
   
+  const handleToggleAdmin = () => {
+    setUserData((prevUserData) => ({
+      ...prevUserData,
+      Admin: !prevUserData.Admin
+    }));
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -42,7 +49,7 @@ const Register = () => {
 
   const isFormValid =
   !userData.name ||
-  !userData.phoneNumber ||
+  !userData.number ||
   !userData.email ||
   !userData.password ||
   !userData.address;
@@ -76,16 +83,16 @@ const Register = () => {
           <div className="md:w-1/2 px-3 mb-3">
             <div className="flex flex-col">
               <input 
-                value={userData.phoneNumber} 
-                name="phoneNumber" 
+                value={userData.number} 
+                name="number" 
                 onChange={handleChange} 
                 className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-1 px-4 mb-1 placeholder-gray-900"
                 placeholder="Número de teléfono"
               />
-              {errors.phoneNumber && <p className="text-red-900 text-xs italic text-center">{errors.phoneNumber}</p>}
+              {errors.number && <p className="text-red-900 text-xs italic text-center">{errors.number}</p>}
             </div>
           </div>
-        </div>
+        </div >
 
         <div className="-mx-3 md:flex mb-1">
           <div className="md:w-1/2 px-3 mb-3">
@@ -118,7 +125,7 @@ const Register = () => {
         </div>
 
         <div className="-mx-3 md:flex mb-1">
-          <div className="md:w-full px-3 mb-3">
+          <div className="md:w-full px-3 mb-1">
             <div className="flex flex-col">
               <input
                 value={userData.address} 
@@ -130,6 +137,16 @@ const Register = () => {
               {errors.address && <p className="text-red-900 text-xs italic text-center">{errors.address}</p>}
             </div>
           </div>
+        </div>
+
+        <div className="flex items-center justify-center mb-3">
+          <button
+            className={`bg-${userData.Admin ? 'green' : 'blue'}-500 hover:bg-${userData.Admin ? 'green' : 'blue'}-700 text-white font-bold py-1 px-2 rounded-xl`}
+            type="button"
+            onClick={handleToggleAdmin}
+          >
+            {userData.Admin ? 'Administrador' : 'Comprador'}
+          </button>
         </div>
 
         <div className={div_style}>

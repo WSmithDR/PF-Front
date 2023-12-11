@@ -1,16 +1,16 @@
-import { useState, useEffect } from 'react';
-import Card from './Card';
+import { useEffect, useState } from 'react';
+import { IoReload } from "react-icons/io5";
 import { useSelector } from 'react-redux';
 import Categories from '../assets/iconsFilters/Category.svg';
+import Controller from '../assets/iconsFilters/Controllers.svg';
+import Earbud from '../assets/iconsFilters/Earbuds.svg';
 import Headset from '../assets/iconsFilters/Headsets.svg';
+import Keyboard from '../assets/iconsFilters/Keyboards.svg';
+import Mices from '../assets/iconsFilters/Mice.svg';
 import Microphone from '../assets/iconsFilters/Microphones.svg';
 import Monitor from '../assets/iconsFilters/Monitors.svg';
 import Mousepad from '../assets/iconsFilters/Mousepads.svg';
-import Earbud from '../assets/iconsFilters/Earbuds.svg';
-import Keyboard from '../assets/iconsFilters/Keyboards.svg';
-import Mices from '../assets/iconsFilters/Mice.svg';
-import Controller from '../assets/iconsFilters/Controllers.svg';
-import { IoReload } from "react-icons/io5";
+import Product from './Products/Product';
 
 const categoryImages = {
   Headsets: Headset,
@@ -200,11 +200,12 @@ const Searchs = () => {
             <div className="grid grid-cols-1 m-5 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
               {!loading &&
               paginatedProducts?.map((product) => (
-                <Card
+                <Product
                   key={product._id}
                   name={product.name}
                   price={product.price}
                   img={product.img}
+                  description={product.description}
                   _id={product._id}
                 />
               ))}

@@ -1,8 +1,8 @@
-import Swal from 'sweetalert2';
 import { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { getProductsById, addToCart } from '../redux/actions';
+import Swal from 'sweetalert2';
+import { addToCart, getProductsById } from '../../redux/actions';
 
 const Detail = () => {
   const { id } = useParams();
@@ -14,14 +14,11 @@ const Detail = () => {
     dispatch(getProductsById(id));
   }, [dispatch, id]);
 
-  console.log(productById);
-
   const handleQuantityChange = (event) => {
     const newQuantity = parseInt(event.target.value, 10);
     setSelectedQuantity(newQuantity);
   };
 
-  const isLocalImage = !productById.img?.startsWith("http");
 
   const handleAddToCart = () => {
     dispatch(addToCart({
@@ -42,7 +39,6 @@ const Detail = () => {
     
   };
 
-
   return (
     <div className='py-40 hfull bg-gray-300 h-screen'>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
@@ -58,9 +54,9 @@ const Detail = () => {
               className="h-64 md:h-80 rounded-lg bg-gray-100 mb-4 flex items-center justify-center"
             >
               <img
-                src={isLocalImage ? `http://localhost:3001/${productById.img}` : productById.img}
+                src={productById.img}
                 alt={`${productById.name} image`}
-                className="w-full h-full object-contain rounded-lg"
+                className="w-full h-full object-contain rounded-lg p-2"
               />
             </div>
             </div>
@@ -74,8 +70,7 @@ const Detail = () => {
             <div className="flex items-center space-x-4 my-4">
               <div>
                 <div className="rounded-lg bg-gray-100 flex py-2 px-3">
-                  <span className="text-indigo-400 mr-1 mt-4">$</span>
-                  <span className="font-bold text-indigo-600 text-3xl">{productById.price}</span>
+                  <span className="font-bold text-indigo-600 text-3xl">$ {productById.price}</span>
                 </div>
               </div>
             </div>

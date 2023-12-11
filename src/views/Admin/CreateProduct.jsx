@@ -1,13 +1,16 @@
 import { useState } from "react";
-import validationCreateProduct from '../utils/Validation/validationCreateProducts';
+import validation from '../../utils/Validation/validationCreateProducts';
 import axios from "axios";
+import Swal from 'sweetalert2';
 
 const CreateProduct = () => {
 
   const [errors, setErrors] = useState({});
+  const [success, setSuccess] = useState(false); 
+  const [message, setMessage] = useState('');
   const [product, setProduct] = useState({
     name: '',
-    brand: null,
+    brand: '',
     sale: 0,
     category: '',
     img: null,
@@ -16,7 +19,7 @@ const CreateProduct = () => {
     quantity: 0
   });
 
-  const categories = ["Headsets", "Microphones", "Monitors", "Mousepads", "Earbuds", "Keyboards", "Mice", "Controllers"];
+  const categories = [  "Audífonos", "Micrófonos", "Monitores", "Mousepads", "Auriculares", "Teclados", "Mouse", "Controles"];
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -28,7 +31,7 @@ const CreateProduct = () => {
     
     setErrors((prevErrors) => ({
       ...prevErrors,
-      [name]: validationCreateProduct({ ...product, [name]: value })[name]
+      [name]: validation({ ...product, [name]: value })[name]
     }));
   };
 
@@ -42,13 +45,16 @@ const CreateProduct = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(product);
     try {
-      await axios.post('http://localhost:3001/product', product, {
+      const token = localStorage.getItem("token");
+      const { data } = await axios.post('http://localhost:3001/product', product, {
         headers: {
+          'x-access-token': token,
           'Content-Type': 'multipart/form-data'
         },
       })
+      setMessage(data.message);
+      console.log(data);
     } catch (error) {
       console.log(error);
     }
@@ -58,21 +64,48 @@ const CreateProduct = () => {
   product.img === null ||
   !product.name ||
   !product.brand ||
-  !product.sale ||
   !product.category ||
   !product.description ||
   !product.price ||
   !product.quantity;
 
+  if (message !== '') {
+    setSuccess(true);
+  }
+
+  if (success) {
+    Swal.fire({
+      icon: 'success',
+      title: 'Producto creado con éxito',
+      showConfirmButton: false,
+      timer: 1500
+    });
+    setSuccess(false);
+    setMessage('');
+    setProduct({
+      name: '',
+      brand: '',
+      sale: 0,
+      category: '',
+      img: null,
+      description: '',
+      price: 0,
+      quantity: 0
+    })
+  }
+
+  console.log(message);
+  console.log(success);
+
   return (
-    <div className="p-10 mt-5 bg-gray-500">
+    <div className="pl-72 ml-10 pr-10 p-9 pb-10 pt-10 min-h-[80vh] bg-gray-900">        
       <form
         encType="multipart/form-data"
         onSubmit={handleSubmit}
-        className="md:flex"
+        className="md:flex h-full"
       >
-        <div className="md:flex-1 p-1 bg-gray-900 rounded-lg flex items-center justify-center">
-          <div className="flex w-full h-screen items-center justify-center bg-grey-lighter rounded relative">
+        <div className="md:flex-1 mt-5 mb-5 ml-0 mr-0 bg-gray-700 rounded-lg flex items-center justify-center">
+          <div className="flex w-full  items-center justify-center bg-grey-lighter rounded relative">
             <input
               type="file"
               accept="image/*"
@@ -102,24 +135,23 @@ const CreateProduct = () => {
                 <svg className="w-8 h-8" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                   <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
                 </svg>
-                <span className="mt-2 text-base leading-normal">Select a file</span>
+                <span className="mt-2 text-base leading-normal">Selecciona una imagen</span>
               </label>
             )}
           </div>
         </div>
-        <div className="md:w-1/2 pl-4">
-          <div className="bg-white shadow-md rounded px-8  pb-8  flex flex-col  h-screen justify-center">
-            <div className="-mx-3 md:flex mb-6">
 
-
+        <div className="md:flex-1 m-5 pl-5">
+          <div className="bg-white shadow-md rounded px-4 pb-0 flex flex-col h-full justify-center">
+            <div className="-mx-3 md:flex pt-1 mb-3">
               <div className="md:w-1/2 px-3 mb-6 md:mb-0">
                 <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" htmlFor="grid-first-name">
-                  Name
+                  Nombre
                 </label>
                 <input
                   className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3" id="grid-first-name"
                   type="text"
-                  placeholder='Name'
+                  placeholder='Escribe tu nombre'
                   value={product.name}
                   onChange={handleChange}
                   name="name"
@@ -130,12 +162,12 @@ const CreateProduct = () => {
 
               <div className="md:w-1/2 px-3">
                 <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" htmlFor="grid-last-name">
-                  Brand
+                  Marca
                 </label>
                 <input
                   className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" id="grid-last-name"
                   type="text"
-                  placeholder='Brand'
+                  placeholder='Escribe la marca'
                   value={product.brand}
                   onChange={handleChange}
                   name="brand"
@@ -145,19 +177,19 @@ const CreateProduct = () => {
             </div>
 
 
-            <div className="-mx-3 md:flex mb-3">
+            <div className="-mx-3 md:flex mb-2">
               <div className="md:w-full px-3">
                 <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" htmlFor="grid-password">
-                  Description
+                  Descripción
                 </label>
                 <textarea
                   className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3 resize-none"
                   id="grid-password"
-                  placeholder="Description"
+                  placeholder="Escribe una descripción"
                   value={product.description}
                   onChange={handleChange}
                   name="description"
-                  style={{ height: '100px', lineHeight: '1.5' }} // Ajusta la altura y el line-height según tus necesidades
+                  style={{ height: '100px', lineHeight: '1.5' }}
                 />
                 {errors.description && <p className="text-red-900 text-xs italic">{errors.description}</p>}
               </div>
@@ -167,13 +199,12 @@ const CreateProduct = () => {
             <div className="-mx-3 md:flex mb-2">
               <div className="md:w-1/2 px-3 mb-6 md:mb-0">
                 <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" htmlFor="grid-city">
-                  Sales
+                  Descuento
                 </label>
                 <div >
                   <input
                     className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" id="grid-city"
                     type="number"
-                    placeholder='Sale'
                     value={product.sale}
                     onChange={handleChange}
                     name="sale"
@@ -186,7 +217,7 @@ const CreateProduct = () => {
 
               <div className="md:w-1/2 px-3 mb-6 md:mb-0">
                 <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" htmlFor="grid-state">
-                  Price
+                  Precio
                 </label>
                 <div>
                   <input
@@ -207,7 +238,7 @@ const CreateProduct = () => {
 
               <div className="md:w-1/2 px-3 mb-6 md:mb-0">
                 <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" htmlFor="grid-state">
-                  Quantity
+                  Cantidad
                 </label>
                 <div>
                   <input
@@ -232,7 +263,7 @@ const CreateProduct = () => {
                 className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
                 htmlFor="category"
               >
-                Category
+                Categoria
               </label>
               <select
                 id="category"
@@ -241,7 +272,7 @@ const CreateProduct = () => {
                 onChange={handleChange}
                 className="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded"
               >
-                <option value="" disabled>Select a category</option>
+                <option value="" disabled>Selecciona una categoria</option>
                 {categories.map((category) => (
                   <option key={category} value={category}>
                     {category}
@@ -253,17 +284,16 @@ const CreateProduct = () => {
               )}
             </div>
 
-            <div className="relative mx-auto pt-10">
+            <div className="relative mx-auto pt-5 mb-4">
               <button 
                 type="submit"
                 disabled={isFormValid}
                 className="middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                 data-ripple-light="true"
               >
-                Create
+                Crear
               </button>
             </div>
-
           </div>
         </div>
       </form>
