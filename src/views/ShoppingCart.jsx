@@ -1,6 +1,6 @@
 import { jwtDecode } from 'jwt-decode';
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
 import AuthModal from "../components/AuthModal";
 import PurchaseCard from '../components/PurchaseCard';
@@ -8,12 +8,13 @@ import { finishPurchase } from '../redux/actions';
 
 const ShoppingCart = () => {
   const dispatch = useDispatch();
-  const storedCartItems = useSelector(state => state.cart)
+  const storedCartItems = JSON.parse(localStorage.getItem('cart')) || [];
+  const [cartItems, setCartItems] = useState(storedCartItems);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(storedCartItems));
-  }, [storedCartItems]);
+    localStorage.setItem('cart', JSON.stringify(cartItems));
+  }, [cartItems]);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -25,7 +26,7 @@ const ShoppingCart = () => {
 
   const isUserLoggedIn = !!localStorage.getItem("token");
 
-  const totalAmount = storedCartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const totalAmount = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
   const handleFinishPurchase = () => {
     if (!isUserLoggedIn) {
@@ -43,7 +44,7 @@ const ShoppingCart = () => {
       return;
     }
 
-    if (storedCartItems.length === 0) {
+    if (cartItems.length === 0) {
       Swal.fire('No hay nada en tu carrito');
       return;
     }
@@ -52,7 +53,7 @@ const ShoppingCart = () => {
     const decodedToken = jwtDecode(token);
     const userId = decodedToken.id
 
-    const objetoPago = storedCartItems.map((item) => ({
+    const objetoPago = cartItems.map((item) => ({
       ...item,
       productId: item.id,
       unit_price: item.price,
@@ -63,14 +64,14 @@ const ShoppingCart = () => {
     dispatch(finishPurchase(objetoPago));
     Swal.fire('Compra en proceso');
     handleCancel();
-    dispatch(finishPurchase([]))
+    setCartItems([]);
   };
 
   return (
     <div className="relative h-creen bg-blue-200">
       <div className="text-center h-screen py-10 ">
         <h2 className="text-3xl justify-center align-center font-bold mt-3 text-black">Tu carrito</h2>
-        {storedCartItems.length === 0 ? (
+        {cartItems.length === 0 ? (
           <p className="text-black text-4xl pt-10 mt-10">Tu carrito esta vacío 😶</p>
         ) : (
           <table className="table p-5 text-gray-400 text-center border-separate space-y-6 rounded-md text-sm">
@@ -83,7 +84,7 @@ const ShoppingCart = () => {
               </tr>
             </thead>
             <tbody>
-            {storedCartItems.map((item) => (
+            {cartItems.map((item) => (
                   <PurchaseCard 
                     key={item.id}
                     img={item.image}
@@ -101,12 +102,12 @@ const ShoppingCart = () => {
           </table>
         )}
         <div className="relative text-2xl rounded-xl text-center mt-3">
-          { storedCartItems.length > 0 &&
+          { cartItems.length > 0 &&
             <button
-              disabled={storedCartItems.length === 0}
+              disabled={cartItems.length === 0}
               onClick={handleFinishPurchase}
               className={`px-4 py-2 rounded focus:outline-none hover:bg-blue-600 bg-blue-500 text-white
-              ${storedCartItems.length === 0 ? 'opacity-50 cursor-not-allowed' : ' text-white'}`}
+              ${cartItems.length === 0 ? 'opacity-50 cursor-not-allowed' : ' text-white'}`}
             >
               Comprar
             </button>
