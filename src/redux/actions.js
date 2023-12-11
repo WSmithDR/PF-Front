@@ -37,7 +37,7 @@ import {
   UPDATE_PRODUCTS,
 } from './types';
 
-const URL = 'http://localhost:3001' || 'https://master--chipper-toffee-f8c293.netlify.app'
+const URL = 'http://localhost:3001' || 'https://pfback1-q5aoyanf.b4a.run'
 
 export function setFilters(filters){
  return {
