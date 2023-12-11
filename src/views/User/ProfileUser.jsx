@@ -119,7 +119,7 @@ const ProfileUser = () => {
           <div className="relative">
             <div  className="w-48 h-48 bg-indigo-100 mx-auto rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-24 flex items-center justify-center overflow-hidden">
             {editMode ? (
-              <div>
+              <div  className="w-48 h-48 bg-indigo-100 mx-auto rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-0 flex items-center justify-center overflow-hidden">
                 <input
                   type="file"
                   accept="image/*"
@@ -154,7 +154,7 @@ const ProfileUser = () => {
               <img
                 src={userData.img ? userData.img : 'https://icons.veryicon.com/png/o/internet--web/prejudice/user-128.png'}
                 alt=""
-                className="object-cover w-full h-full rounded-full"
+                className="object-cover w-full h-full"
               />
             )}
             </div>
