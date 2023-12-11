@@ -37,7 +37,7 @@ import {
   UPDATE_PRODUCTS,
 } from './types';
 
-let URL = 'http://localhost:3001' || 'https://pfback1-q5aoyanf.b4a.run'
+const URL = 'https://pfback1-q5aoyanf.b4a.run'
 
 export function setFilters(filters){
  return {
