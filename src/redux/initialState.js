@@ -37,8 +37,6 @@ const initialState = {
     successPostTokenGoogle: false,
     messageGoogle: '',
     
-    dataUser: [],
-
     loadingPostCategory: false,
     errorPostCategory: false,
     successPostCategory: false,

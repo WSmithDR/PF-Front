@@ -43,9 +43,7 @@ const NavBar = () => {
     fetchData();
   }, [fetchData, dispatch]);
 
-  const userData = useSelector((state) => state.userData);
   const isUserLoggedIn = !!localStorage.getItem("token");
-  const isAdmin = userData && userData.Admin;
 
   useEffect(() => {
     fetchData(); 
@@ -59,6 +57,7 @@ const NavBar = () => {
     localStorage.removeItem("token");
     dispatch(clearData());
     navigate("/home");
+    setIsModalOpen(false);
   };
 
   return (
@@ -92,7 +91,10 @@ const NavBar = () => {
 
         {isUserLoggedIn ? (
           <div className='pl-0'>
-            <UserIcon />
+            <UserIcon                   
+              onClick={handleLogout}
+            />
+            
           </div>
         ) : (
           <Button
