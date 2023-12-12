@@ -1,9 +1,9 @@
 import { jwtDecode } from 'jwt-decode';
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserData, putUserData, getAdminProducts } from "../../redux/actions";
-import ProductCreated from './ProductCreated';
 import { NavLink } from 'react-router-dom';
+import { getAdminProducts, getUserData, putUserData } from "../../redux/actions";
+import ProductCreated from './ProductCreated';
 
 const Profile = () => {
   const token = localStorage.getItem('token');
@@ -43,7 +43,7 @@ const Profile = () => {
 
   const [sectionMyProducts, setSectionMyProducts] = useState(false);
 
-  const handleSectionChange = (section) => {
+  const handleSectionChange = () => {
     setSectionMyProducts(!sectionMyProducts);
   }
 
