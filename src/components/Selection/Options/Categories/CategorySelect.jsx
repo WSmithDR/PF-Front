@@ -13,7 +13,7 @@ const CategorySelect = ({ filters, categoriesWithAll, handleFilterChange }) => {
  return (
     <div className="p-0 bg-gray-100 rounded-lg" onClick={toggleCategoryOptions}>
       <div className="grid grid-cols-2 items-center cursor-pointer">
-        <span className="text-gray-700  bg-gray-100 rounded-tl-md rounded-bl-md">
+        <span className="text-gray-700  bg-gray-00 rounded-tl-md rounded-bl-md">
           {filters.category ? filters.category : "Categorias"}
         </span>
         <img
@@ -23,7 +23,7 @@ const CategorySelect = ({ filters, categoriesWithAll, handleFilterChange }) => {
               : Categories
           }
           alt={filters.category || "Categories"}
-          className="w-6 h-6 bg-gray-100 rounded-tr-md rounded-br-md p-2"
+          className="w-6 h-6 bg-gray-100 rounded-tr-md rounded-br-md p-1"
         />
       </div>
       {showCategoryOptions && (

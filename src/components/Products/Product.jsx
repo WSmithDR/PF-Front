@@ -1,7 +1,7 @@
-import Swal from 'sweetalert2';
+import { useDispatch, } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import { addToCart } from '../../redux/actions';
-import { useDispatch,  } from 'react-redux';
 
 const Product = ({ price, img, name, _id, description, sales }) => {
   const dispatch = useDispatch();
@@ -33,16 +33,16 @@ const Product = ({ price, img, name, _id, description, sales }) => {
         
         <h3 className='my-4 pl-4 font-bold text-black-500'>{name}</h3>
 
-        <div class="flex mb-3 items-center">
+        <div className="flex mb-3 items-center">
           <p className='ml-4 text-xl font-semibold text-gray-300'>${price}</p>
-          {sales !== 0 && sales !== '' && sales !== 0 && <p class="ml-auto text-base pr-5 py-auto my-auto font-medium text-green-500">${sales} off</p>}
+          {sales !== 0 && sales !== '' && sales !== 0 && <p className="ml-auto text-base pr-5 py-auto my-auto font-medium text-green-500">${sales} off</p>}
         </div>
       </NavLink>
 
-      <div class="p-3 pb-5 pt-0">
+      <div className="p-3 pb-5 pt-0">
         <button
           onClick={handleAddToCart}
-          class="block w-full select-none rounded-lg  py-3 px-6 text-center align-middle font-sans bg-gray-900 text-xs font-bold uppercase transition-all hover:bg-gray-800 hover:scale-105 focus:scale-105 focus:opacity-[0.85] active:scale-100 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+          className="block w-full select-none rounded-lg  py-3 px-6 text-center align-middle font-sans bg-gray-900 text-xs font-bold uppercase transition-all hover:bg-gray-800 hover:scale-105 focus:scale-105 focus:opacity-[0.85] active:scale-100 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
           type="button"
         >
           Añadir al carrito

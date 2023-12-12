@@ -1,9 +1,11 @@
+
+import { productsContainer } from "../../constants/styles/products"
 import Product from "./Product"
 
 
 const Products = ({products}) =>{
     return(
-        <div className="grid grid-cols-1 m-5 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+        <div className={productsContainer}>
               {products?.map((product) => (
                 <Product
                   key={product._id}
