@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { addToCart, getProductsById } from '../../redux/actions';
+import Reviews from '../Reviews';
 
 const Detail = () => {
   const { id } = useParams();
@@ -12,6 +13,7 @@ const Detail = () => {
 
   useEffect(() => {
     dispatch(getProductsById(id));
+    dispatch(getProductReview(id));
   }, [dispatch, id]);
 
   const handleQuantityChange = (event) => {
@@ -59,6 +61,7 @@ const Detail = () => {
                 className="w-full h-full object-contain rounded-lg p-2"
               />
             </div>
+            <Reviews productId={id} />
             </div>
           </div>
           <div className="md:flex-1 px-4">

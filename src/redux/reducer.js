@@ -11,6 +11,7 @@ import {
   GET_DELETED_PRODUCTS,
   GET_PRODUCTS_BY_ID,
   GET_PRODUCTS_BY_NAME,
+  GET_REVIEWS,
   RESTORE_PRODUCT,
   GET_ALL_USERS,
   GET_USER_BY_ID,
@@ -63,6 +64,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         productById: action.payload,
+      };
+
+    case GET_REVIEWS:
+      return {
+        ...state,
+        reviews: action.payload,
       };
 
     case CREATE_NEW_PRODUCT:

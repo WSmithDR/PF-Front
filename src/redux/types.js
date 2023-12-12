@@ -74,7 +74,7 @@ export const GET_USER_PRODUCTS_FAILURE = 'GET_USER_PRODUCTS_FAILURE';
 
 // Reviews
 export const CREATE_REVIEW = 'CREATE_REVIEW';
-
+export const GET_REVIEWS = 'GET_REVIEWS';
 
 //Pagination
 export const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
