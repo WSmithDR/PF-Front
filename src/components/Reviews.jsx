@@ -10,6 +10,8 @@ const Reviews = ({ productId }) => {
     dispatch(getProductReview(productId));
   }, [dispatch, productId]);
 
+
+  
   return (
     <div>
       <h2>Comentarios</h2>
