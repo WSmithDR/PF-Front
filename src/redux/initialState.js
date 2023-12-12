@@ -11,6 +11,7 @@ const initialState = {
     admins: [],
     users: [],
     reviews: [],
+    cartItems: [],
     localStorage: [],
     cart: [],
     items: [],
