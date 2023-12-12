@@ -6,33 +6,35 @@ import {
   CREATE_NEW_PRODUCT,
   CREATE_REVIEW,
   DELETE_PRODUCTS,
+  DELETE_USER,
   FINISH_PURCHASE,
+  GET_ADMIN_PRODUCTS_FAILURE, GET_ADMIN_PRODUCTS_REQUEST, GET_ADMIN_PRODUCTS_SUCCESS,
   GET_ALL_PRODUCTS,
+  GET_ALL_USERS,
+  GET_ALL_USERS_DELETED,
   GET_DELETED_PRODUCTS,
   GET_PRODUCTS_BY_ID,
   GET_PRODUCTS_BY_NAME,
   GET_REVIEWS,
   RESTORE_PRODUCT,
   GET_ALL_USERS,
+  GET_USERDATA_FAILURE, GET_USERDATA_REQUEST, GET_USERDATA_SUCCESS,
   GET_USER_BY_ID,
-  DELETE_USER,
-  GET_ALL_USERS_DELETED,
-  RESTORE_USER,
+  GET_USER_PRODUCTS_FAILURE, GET_USER_PRODUCTS_REQUEST, GET_USER_PRODUCTS_SUCCESS,
+  GET_USER_PURCHASES_FAILURE, GET_USER_PURCHASES_REQUEST, GET_USER_PURCHASES_SUCCESS,
   LOCAL_STORAGE,
   POST_LOGIN_FAILURE, POST_LOGIN_REQUEST, POST_LOGIN_SUCCESS,
+  POST_MESSAGE_FAILURE, POST_MESSAGE_REQUEST, POST_MESSAGE_SUCCESS,
   POST_USER_FAILURE, POST_USER_REQUEST, POST_USER_SUCCESS,
+  PUT_USERDATA_FAILURE, PUT_USERDATA_REQUEST, PUT_USERDATA_SUCCESS,
   REGISTER_ADMIN,
   REGISTER_USER,
   REMOVE_FROM_CART,
+  RESTORE_PRODUCT,
+  RESTORE_USER,
   SEND_TOKEN_GOOGLE_FAILURE, SEND_TOKEN_GOOGLE_REQUEST, SEND_TOKEN_GOOGLE_SUCCESS,
   SET_CURRENT_PAGE,
   UPDATE_PRODUCTS,
-  POST_MESSAGE_FAILURE, POST_MESSAGE_REQUEST, POST_MESSAGE_SUCCESS,
-  GET_USERDATA_FAILURE, GET_USERDATA_REQUEST, GET_USERDATA_SUCCESS,
-  PUT_USERDATA_FAILURE, PUT_USERDATA_REQUEST, PUT_USERDATA_SUCCESS,  
-  GET_USER_PURCHASES_FAILURE, GET_USER_PURCHASES_REQUEST, GET_USER_PURCHASES_SUCCESS,
-  GET_ADMIN_PRODUCTS_FAILURE, GET_ADMIN_PRODUCTS_REQUEST, GET_ADMIN_PRODUCTS_SUCCESS,
-  GET_USER_PRODUCTS_FAILURE, GET_USER_PRODUCTS_REQUEST, GET_USER_PRODUCTS_SUCCESS,
 } from './types';
 
 const reducer = (state = initialState, action) => {
@@ -127,20 +129,22 @@ const reducer = (state = initialState, action) => {
         ...state,
         localstorage: [action.payload],
       };
-  
-    case REMOVE_FROM_CART:
-      const productIdToRemove = action.payload;
-      const updatedCartAfterRemoval = state.cart.filter(item => item.id !== productIdToRemove);
-      localStorage.setItem('cart', JSON.stringify(updatedCartAfterRemoval));
-      return {
-        ...state,
-        cart: updatedCartAfterRemoval,
-      };
+      
+      case REMOVE_FROM_CART:
+        const productIdToRemove = action.payload;
+        const updatedCartAfterRemoval = state.cart.filter(item => item.id !== productIdToRemove);
+        localStorage.setItem('cart', JSON.stringify(updatedCartAfterRemoval));
+        return {
+          ...state,
+          cart: updatedCartAfterRemoval,
+        };
+      
     case FINISH_PURCHASE:
       return {
         ...state,
         cart: action.payload
       };
+      
     case ADD_TO_CART:
       const updatedCart = [...state.cart, action.payload];
       localStorage.setItem('cart', JSON.stringify(updatedCart));
