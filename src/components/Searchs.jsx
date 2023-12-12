@@ -112,7 +112,7 @@ const Searchs = () => {
   console.log(productsByName);
 
   return (
-    <div className="relative h-full min-h-[100vh] bg-blue-200">
+    <div className="relative h-full bg-gray-900 min-h-[100vh] bg-blue-200">
       <div className="relative inset-0">
         <div className="text-center pt-40 pb-0 relative">
           <div className="flex flex-col items-center">
@@ -258,7 +258,7 @@ const Searchs = () => {
 
             { productsByName.length === 0 && (
                 <div>
-                  <h2 className='text-4xl'>No hay resultados</h2>
+                  <h2 className='text-4xl text-white'>No hay resultados</h2>
                 </div>
               )
             }

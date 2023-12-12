@@ -98,7 +98,7 @@ const NavBar = () => {
           </div>
         ) : (
           <Button
-            className="text-gray4 font-pop-light text-xl bg-transparent border-none shadow-none navbutton"
+            className="text-white font-pop-light text-xl bg-transparent border-none shadow-none navbutton"
             type="primary"
             onClick={() => setIsModalOpen(true)}
           >
