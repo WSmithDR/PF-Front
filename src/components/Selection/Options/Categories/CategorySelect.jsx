@@ -11,9 +11,9 @@ const CategorySelect = ({ filters, categoriesWithAll, handleFilterChange }) => {
  };
 
  return (
-    <div className="select-container" onClick={toggleCategoryOptions}>
-      <div className="flex items-center cursor-pointer">
-        <span className="text-gray-700 p-2 bg-gray-100 rounded-tl-md rounded-bl-md">
+    <div className="p-0 bg-gray-100 rounded-lg" onClick={toggleCategoryOptions}>
+      <div className="grid grid-cols-2 items-center cursor-pointer">
+        <span className="text-gray-700  bg-gray-100 rounded-tl-md rounded-bl-md">
           {filters.category ? filters.category : "Categorias"}
         </span>
         <img
@@ -23,11 +23,11 @@ const CategorySelect = ({ filters, categoriesWithAll, handleFilterChange }) => {
               : Categories
           }
           alt={filters.category || "Categories"}
-          className="w-6 h-6 bg-gray-100 rounded-tr-md rounded-br-md p-2 "
+          className="w-6 h-6 bg-gray-100 rounded-tr-md rounded-br-md p-2"
         />
       </div>
       {showCategoryOptions && (
-        <div className="absolute mt-2 bg-white border border-gray-300 rounded-md overflow-hidden shadow-md flex flex-col">
+        <div className="absolute mt-2 bg-white border border-gray-300 rounded-md overflow-hidden shadow-md">
           {categoriesWithAll.map((category) => (
             <div
               key={category}
@@ -35,7 +35,7 @@ const CategorySelect = ({ filters, categoriesWithAll, handleFilterChange }) => {
                 handleFilterChange('category', category);
                 toggleCategoryOptions();
               }}
-              className="flex items-center px-8 py-2 cursor-pointer hover:bg-gray-100"
+              className="flex items-center px-2 py-2 cursor-pointer hover:bg-gray-100"
             >
               <span className="text-gray-700">{category || "Categorías"}</span>
               <img
