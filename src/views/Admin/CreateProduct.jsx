@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import Swal from 'sweetalert2';
+import { URL } from "../../redux/actions";
 import validation from '../../utils/Validation/validationCreateProducts';
 
 const CreateProduct = () => {
@@ -48,7 +49,7 @@ const CreateProduct = () => {
     event.preventDefault();
     try {
       const token = localStorage.getItem("token");
-      const { data } = await axios.post('http://localhost:3001/product', product, {
+      const { data } = await axios.post(`${URL}/product`, product, {
         headers: {
           'x-access-token': token,
           'Content-Type': 'multipart/form-data'
