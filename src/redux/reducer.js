@@ -15,6 +15,7 @@ import {
   GET_DELETED_PRODUCTS,
   GET_PRODUCTS_BY_ID,
   GET_PRODUCTS_BY_NAME,
+  GET_REVIEWS,
   GET_USERDATA_FAILURE, GET_USERDATA_REQUEST, GET_USERDATA_SUCCESS,
   GET_USER_BY_ID,
   GET_USER_PRODUCTS_FAILURE, GET_USER_PRODUCTS_REQUEST, GET_USER_PRODUCTS_SUCCESS,
@@ -31,7 +32,7 @@ import {
   RESTORE_USER,
   SEND_TOKEN_GOOGLE_FAILURE, SEND_TOKEN_GOOGLE_REQUEST, SEND_TOKEN_GOOGLE_SUCCESS,
   SET_CURRENT_PAGE,
-  UPDATE_PRODUCTS,
+  UPDATE_PRODUCTS
 } from './types';
 
 const reducer = (state = initialState, action) => {
@@ -63,6 +64,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         productById: action.payload,
+      };
+
+    case GET_REVIEWS:
+      return {
+        ...state,
+        reviews: action.payload,
       };
 
     case CREATE_NEW_PRODUCT:
@@ -120,7 +127,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         localstorage: [action.payload],
       };
-  
+      
       case REMOVE_FROM_CART:
         const productIdToRemove = action.payload;
         const updatedCartAfterRemoval = state.cart.filter(item => item.id !== productIdToRemove);
@@ -129,11 +136,13 @@ const reducer = (state = initialState, action) => {
           ...state,
           cart: updatedCartAfterRemoval,
         };
+      
     case FINISH_PURCHASE:
       return {
         ...state,
         cart: action.payload
       };
+      
     case ADD_TO_CART:
       const updatedCart = [...state.cart, action.payload];
       localStorage.setItem('cart', JSON.stringify(updatedCart));
@@ -184,7 +193,6 @@ const reducer = (state = initialState, action) => {
         successPostLogin: true,
         access: action.payload.access,
         messageLogin: action.payload.data.message,
-        dataUser: action.payload.data
       };
     case POST_LOGIN_FAILURE:
       return {
@@ -209,7 +217,6 @@ const reducer = (state = initialState, action) => {
         successPostUser: true,
         access: action.payload.access,
         messageRegister: action.payload.data.message,
-        dataUser: action.payload.data
       };
     case POST_USER_FAILURE:
       return {
@@ -233,7 +240,6 @@ const reducer = (state = initialState, action) => {
         errorPostTokenGoogle: false,
         successPostTokenGoogle: true,
         access: action.payload.access,
-        dataUser: action.payload.data,
         messageGoogle: action.payload.data.message
       };
     case SEND_TOKEN_GOOGLE_FAILURE:
@@ -260,7 +266,10 @@ const reducer = (state = initialState, action) => {
         loadingPostTokenGoogle: false,
         errorPostTokenGoogle: false,
         successPostTokenGoogle: false,
-        dataUser: [],
+        userData: [],
+        loadingGetUserData: false,
+        errorGetUserData: false,
+        successGetUserData: false,
       };
 
     case POST_MESSAGE_REQUEST:

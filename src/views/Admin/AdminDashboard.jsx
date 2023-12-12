@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import Chart from "chart.js/auto";
 import { NavLink } from "react-router-dom";
 
-
 const AdminDashboard = () => {
   const dispatch = useDispatch();
 

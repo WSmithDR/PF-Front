@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { addToCart, getProductsById } from '../../redux/actions';
+import Reviews from '../Reviews';
 
 const Detail = () => {
   const { id } = useParams();
@@ -12,6 +13,7 @@ const Detail = () => {
 
   useEffect(() => {
     dispatch(getProductsById(id));
+    dispatch(getProductReview(id));
   }, [dispatch, id]);
 
   const handleQuantityChange = (event) => {
@@ -40,7 +42,7 @@ const Detail = () => {
   };
 
   return (
-    <div className='py-40 hfull bg-gray-300 h-screen'>
+    <div className='py-40 min-h-[100vh] bg-gray-300 h-screen'>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
         <div className="flex flex-col md:flex-row -mx-4">
           <div className="md:flex-1 px-4">
@@ -59,6 +61,7 @@ const Detail = () => {
                 className="w-full h-full object-contain rounded-lg p-2"
               />
             </div>
+            <Reviews productId={id} />
             </div>
           </div>
           <div className="md:flex-1 px-4">

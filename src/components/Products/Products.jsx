@@ -12,6 +12,7 @@ const Products = ({products}) =>{
                   img={product.img}
                   _id={product._id}
                   description={product.description}
+                  sales={product.sales}
                 />
               ))}
         </div>

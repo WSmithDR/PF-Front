@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserData, putUserData, getAdminProducts } from "../../redux/actions";
 import ProductCreated from './ProductCreated';
+import { NavLink } from 'react-router-dom';
 
 const Profile = () => {
   const token = localStorage.getItem('token');
@@ -99,18 +100,19 @@ const Profile = () => {
 
   return (
     <div className="p-5 pt-10 bg-gray-900 ml-72 h-full min-h-[100vh]">
-      <div className="p-5 rounded-xl bg-blue-200 shadow mt-9 h-full">
+      <div className="p-5 rounded-xl bg-gray-950 shadow mt-9 h-full">
         <div className="grid grid-cols-1 md:grid-cols-3">
           <div className="grid grid-cols-3 text-center order-last md:order-first mt-10 md:mt-0">
-            <div className='cursor-pointer bg-gray-900 hover:bg-gray-700 rounded-lg mr-1 hover-text-gray-900'onClick={handleSectionChange}>
+
+            <div className='cursor-pointer bg-gray-800 hover:bg-gray-700 rounded-lg mr-1 hover-text-gray-900'onClick={handleSectionChange}>
               <p className="text-gray-50 text-xl">{quantityProducts}</p>
               <p className="font-bold pb-1 text-gray-50">Creados</p>
             </div>
-            <div className='cursor-pointer mr-1 hover:bg-gray-700 bg-gray-900 rounded-lg'>
+            <div className='cursor-pointer mr-1 hover:bg-gray-700 bg-gray-800 rounded-lg'>
               <p className="text-gray-50 text-xl">10</p>
               <p className="font-bold text-gray-50">Ventas</p>
             </div>
-            <div className='cursor-pointer hover:bg-gray-700 bg-gray-900 mr-1 rounded-lg'>
+            <div className='cursor-pointer hover:bg-gray-700 bg-gray-800 mr-1 rounded-lg'>
               <p className="text-gray-50 text-xl">89</p>
               <p className="font-bold text-gray-50">Opiniones</p>
             </div>
@@ -119,7 +121,7 @@ const Profile = () => {
           <div className="relative">
             <div  className="w-48 h-48 bg-indigo-100 mx-auto rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-24 flex items-center justify-center overflow-hidden">
             {editMode ? (
-              <div>
+              <div  className="w-48 h-48 bg-indigo-100 mx-auto rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-0 flex items-center justify-center overflow-hidden">
                 <input
                   type="file"
                   accept="image/*"
@@ -165,7 +167,7 @@ const Profile = () => {
               { editMode ? (
                 <button onClick={handleEditClick} className="text-white py-2 px-4 rounded-xl uppercase rounded bg-red-400 hover:bg-red-500 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5">Cancelar</button>
               ) : (
-                <button onClick={handleEditClick} className="text-white py-2 px-4 rounded-xl uppercase rounded bg-blue-400 hover:bg-blue-500 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5">Editar</button>
+                <button onClick={handleEditClick} className="text-white py-2 px-4 rounded-xl uppercase rounded bg-blue-950 hover:bg-blue-900 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5">Editar</button>
               )}
               {editMode && (
                 <button
@@ -183,30 +185,30 @@ const Profile = () => {
         </div>
 
         { sectionMyProducts === false &&
-          <div className="mt-20 text-center border-b pb-5">
+          <div className="mt-20 text-center pb-5">
 
-            <h1 className="text-4xl font-medium text-gray-700">
+            <h1 className="text-4xl text-white font-medium text-gray-700">
               {editMode ? (
                 <input 
                   type="text" 
                   value={name} 
                   onChange={(e) => setName(e.target.value)} 
                   placeholder={userData.name}
-                  className="appearance-none w-72 text-white bg-gray-900 text-grey-darker border border-red rounded-lg py-1 px-4  placeholder-gray-900 text-center"
+                  className="appearance-none w-72 text-white bg-gray-900 text-grey-darker  border-red rounded-lg py-1 px-4  placeholder-gray-500 text-center"
                 />
               ) : (
                 userData.name
               )}
             </h1>
 
-            <p className="mt-3 text-xl text-gray-500">
+            <p className="mt-3 text-white text-xl text-white">
               {editMode ? (
                 <input 
                   type="email" 
                   value={email} 
                   onChange={(e) => setEmail(e.target.value)} 
                   placeholder={userData.email}
-                  className="appearance-none w-72 text-white bg-gray-900 text-grey-darker border border-red rounded-lg py-1 px-4  placeholder-gray-900 text-center"
+                  className="appearance-none w-72 text-white bg-gray-900 text-grey-darker  border-red rounded-lg py-1 px-4  placeholder-gray-500 text-center"
                 />
               ) : (
                 userData.email
@@ -214,57 +216,57 @@ const Profile = () => {
             </p>
 
               {editMode ? (
-                <p className="mt-3 text-xl text-gray-500">
+                <p className="mt-3 text-xl text-white">
                   <input 
                     type="text" 
                     value={number || ''} 
                     onChange={(e) => setNumber(e.target.value)} 
                     placeholder={userData.number || 'Escribe tu numero de telefono'}
-                    className="appearance-none w-72 text-white bg-gray-900 text-grey-darker border border-red rounded-lg py-1 px-4  placeholder-gray-900 text-center"
+                    className="appearance-none w-72 text-white bg-gray-900 text-grey-darker  border-red rounded-lg py-1 px-4  placeholder-gray-500 text-center"
                   />
                 </p>
               ) : (
                 userData.number ? (
-                  <p className="mt-5 text-xl text-gray-500">{userData.number}</p>
+                  <p className="mt-5 text-xl text-gray-300">{userData.number}</p>
                 ) : (
-                  <p className="mt-5 text-xl text-gray-500">No hay telefono</p>
+                  <p className="mt-5 text-xl text-gray-300">No hay telefono</p>
                 )
               )}
 
 
               {editMode ? (
-                <p className="mt-3 text-xl text-gray-500">
+                <p className="mt-3 text-xl text-white">
                   <input 
                     type="text" 
                     value={address} 
                     onChange={(e) => setAddress(e.target.value)} 
                     placeholder={userData.address || 'Escribe tu direccion'}
-                    className="appearance-none w-72 text-white bg-gray-900 text-grey-darker border border-red rounded-lg py-1 px-4  placeholder-gray-900 text-center"
+                    className="appearance-none w-72 text-white bg-gray-900 text-grey-darker  border-red rounded-lg py-1 px-4  placeholder-gray-500 text-center"
                   />
                 </p>
               ) : (
                 userData.address ? (
-                  <p className="mt-5 text-xl text-gray-500">{userData.address}</p>
+                  <p className="mt-5 text-xl text-gray-300">{userData.address}</p>
                 ) : (
-                  <p className="mt-5 text-xl text-gray-500">No hay direccion</p>
+                  <p className="mt-5 text-xl text-gray-300">No hay direccion</p>
                 )
               )}
 
               {editMode ? (
-                <p className="mt-3 text-xl text-gray-500">
+                <p className="mt-3 text-xl text-white">
                   <input 
                     type="password" 
                     value={password} 
                     onChange={(e) => setPassword(e.target.value)} 
                     placeholder={userData.password ? '*****' : 'No hay contraseña'}
-                    className="appearance-none w-72 text-white bg-gray-900 text-grey-darker border border-red rounded-lg py-1 px-4 mb-1 placeholder-gray-900 text-center"
+                    className="appearance-none w-72 text-white bg-gray-900 text-grey-darker  border-red rounded-lg py-1 px-4 mb-1 placeholder-gray-500 text-center"
                   />
                 </p>
               ) : (
                 userData.password ? (
-                  <p className="mt-5 text-xl text-gray-500">***********</p>
+                  <p className="mt-5 text-xl text-gray-300">***********</p>
                 ) : (
-                  <p className="mt-5 text-xl text-gray-500">No hay contraseña</p>
+                  <p className="mt-5 text-xl text-gray-300">No hay contraseña</p>
                 )
               )}
             </div>
@@ -273,6 +275,17 @@ const Profile = () => {
         { sectionMyProducts === true &&
           <div className='pt-10 '>
             <ProductCreated />
+          </div>
+        }
+
+        { quantityProducts === 0 && sectionMyProducts === true &&
+          <div className='text-center'>
+            <h2 className='text-3xl pt-10 pb-5'>No tienes productos creados.</h2>
+            <NavLink to={'/dashboard/create'}>
+              <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg'>
+                Crear producto
+              </button>
+            </NavLink>
           </div>
         }
         

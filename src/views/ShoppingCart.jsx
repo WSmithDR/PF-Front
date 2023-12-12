@@ -24,8 +24,8 @@ const ShoppingCart = () => {
   };
 
   const isUserLoggedIn = !!localStorage.getItem("token");
-
-  const totalAmount = storedCartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const totalAmount = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const formattedNumber = parseFloat(totalAmount).toFixed(2);
 
   const handleFinishPurchase = () => {
     if (!isUserLoggedIn) {
@@ -67,8 +67,8 @@ const ShoppingCart = () => {
   };
 
   return (
-    <div className="relative h-creen bg-blue-200">
-      <div className="text-center h-screen py-10 ">
+    <div className="relative min-h-[100vh] bg-blue-200">
+      <div className="text-center min-h-[100vh] py-10 ">
         <h2 className="text-3xl justify-center align-center font-bold mt-3 text-black">Tu carrito</h2>
         {storedCartItems.length === 0 ? (
           <p className="text-black text-4xl pt-10 mt-10">Tu carrito esta vacío 😶</p>
@@ -95,7 +95,7 @@ const ShoppingCart = () => {
                   />
               ))}
               <tr>
-                <td className="border bg-gray-800 text-2xl p-2 text-white">Total a pagar: <span className='font-bold'>${totalAmount}</span></td>
+                <td className="border bg-gray-800 text-2xl p-2 text-white">Total a pagar: <span className='font-bold'>${formattedNumber}</span></td>
               </tr>
             </tbody>
           </table>

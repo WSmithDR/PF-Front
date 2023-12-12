@@ -4,6 +4,7 @@ import { getUserPurchases } from '../../redux/actions';
 import { jwtDecode } from 'jwt-decode';
 import PurchaseCard from '../../components/PurchaseCard';
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
+import { NavLink } from 'react-router-dom';
 
 const UserPurchase = () => {
   const token = localStorage.getItem('token'); 
@@ -184,6 +185,17 @@ const UserPurchase = () => {
             ))}
           </tbody>
         </table>
+        
+        { userPurchase.length === 0 && 
+          <div className='justify-center align-center text-center pt-10'>
+            <h1 className="text-center text-4xl text-white">No hiciste ninguna compra.</h1>
+            <NavLink to={'/home'}>
+              <button className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded inline-flex items-center mt-10">
+                <span className='text-xl'>Ir a comprar</span>
+              </button>
+            </NavLink>
+          </div>
+        }
       </div>
     </div>
   </div>

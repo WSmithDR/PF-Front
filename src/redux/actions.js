@@ -14,6 +14,7 @@ import {
   GET_DELETED_PRODUCTS,
   GET_PRODUCTS_BY_ID,
   GET_PRODUCTS_BY_NAME,
+  GET_REVIEWS,
   GET_USERDATA_FAILURE,
   GET_USERDATA_REQUEST, GET_USERDATA_SUCCESS,
   GET_USER_BY_ID,
@@ -91,6 +92,18 @@ export function getProductsById(_id) {
    });
  };
 } 
+
+export function getProductReview(productId) {
+  return async function (dispatch) {
+    const {data} = await axios.get(`${URL}/review/${productId}`);
+    console.log(data);
+    dispatch({
+      type: GET_REVIEWS,
+      payload: data
+    })
+  }
+}
+
  export function createProduct(newproduct) {
  console.log(newproduct);
  return async function (dispatch) {
@@ -117,7 +130,6 @@ export function getProductsById(_id) {
    });
  };
 }
-
 export function restoreProduct(id) {
  return async function (dispatch) {
    const restoredProduct = await axios.put(`${URL}/product/restore/${id}`, { headers: { 'Cache-Control': 'no-cache' }});
@@ -127,7 +139,6 @@ export function restoreProduct(id) {
    });
  };
 }
-
 export function updateProduct(payload) {
  return async function (dispatch) {
    console.log(payload.id);
@@ -140,7 +151,6 @@ export function updateProduct(payload) {
    });
  };
 }
-
 export function getDeletedProducts() {
  return async function (dispatch) {
    const getDeletedProducts = await axios.get(`${URL}/product/deleted`, { headers: { 'Cache-Control': 'no-cache' }});
