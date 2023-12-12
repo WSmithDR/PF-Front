@@ -35,7 +35,7 @@ const Product = ({ price, img, name, _id, description, sales }) => {
 
         <div class="flex mb-3 items-center">
           <p className='ml-4 text-xl font-semibold text-gray-300'>${price}</p>
-          {sales !== 0 && <p class="ml-auto text-base pr-5 py-auto my-auto font-medium text-green-500">${sales} off</p>}
+          {sales !== 0 && sales !== '' && sales !== 0 && <p class="ml-auto text-base pr-5 py-auto my-auto font-medium text-green-500">${sales} off</p>}
         </div>
       </NavLink>
 
