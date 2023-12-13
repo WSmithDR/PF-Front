@@ -95,7 +95,7 @@ const AdminDashboard = () => {
 
   return (
     <div>
-      <div className="flex-1 pb-5 bg-gray-900 p-4 ml-72">
+      <div className="flex-1 pb-5 min-h-[100vh] bg-gray-900 p-4 ml-72">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2 p-2">
       
           <div className="text-center align-center justify-center">
