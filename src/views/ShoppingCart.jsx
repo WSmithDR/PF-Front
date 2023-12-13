@@ -70,17 +70,18 @@ const ShoppingCart = () => {
     }));
 
     dispatch(finishPurchase(objetoPago));
+    setCart([])
     Swal.fire('Compra en proceso');
     handleCancel();
     dispatch(finishPurchase([]))
   };
 
   return (
-    <div className="relative min-h-[100vh] bg-blue-200">
+    <div className="relative min-h-[100vh] bg-gray-900">
       <div className="text-center min-h-[100vh] py-10 ">
-        <h2 className="text-3xl justify-center align-center font-bold mt-3 text-black">Tu carrito</h2>
+        <h2 className="text-3xl justify-center align-center font-bold mt-3 text-white">Tu carrito</h2>
         {storedCartItems.length === 0 ? (
-          <p className="text-black text-4xl pt-10 mt-10">Tu carrito esta vacío 😶</p>
+          <p className=" text-4xl text-white pt-10 mt-10">Tu carrito esta vacío 😶</p>
         ) : (
           <table className="table p-5 text-gray-400 text-center border-separate space-y-6 rounded-md text-sm">
             <thead className="bg-gray-800 text-gray-500 rounded-md">

@@ -108,10 +108,6 @@ const Profile = () => {
               <p className="text-gray-50 text-xl">{quantityProducts}</p>
               <p className="font-bold pb-1 text-gray-50">Creados</p>
             </div>
-            <div className='cursor-pointer hover:bg-gray-700 bg-gray-800 mr-1 rounded-lg'>
-              <p className="text-gray-50 text-xl">89</p>
-              <p className="font-bold text-gray-50">Opiniones</p>
-            </div>
           </div>
 
           <div className="relative">

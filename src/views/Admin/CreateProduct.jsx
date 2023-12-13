@@ -108,49 +108,51 @@ const CreateProduct = () => {
   }
 
   return (
-    <div className="p-5 pt-10 bg-gray-900 ml-72 h-full min-h-[100vh]">
+    <div className="p-5 pt-5 bg-gray-900 ml-72 h-full min-h-[100vh]">
     <div className="p-5 rounded-xl bg-gray-950 shadow mt-9 h-full">        
       <form
         encType="multipart/form-data"
         onSubmit={handleSubmit}
         className="md:flex h-full"
       >
+        
         <div className="md:flex-1 mt-5 mb-5 ml-0 mr-0 bg-gray-700 rounded-lg flex items-center justify-center">
-          <div className="flex w-full  items-center justify-center bg-grey-lighter rounded relative">
-            <input
-              type="file"
-              accept="image/*"
-              name="img"
-              onChange={handleImageChange}
-              required
-              style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-                opacity: 0, 
-                zIndex: 2,
-                cursor: 'pointer'
-              }}
-            />
-            {product.img ? (
-              <div className="bg-gray-600 rounded-lg flex items-center justify-center">
-                <img
-                  src={URL.createObjectURL(product.img)}
-                  alt={`${product.name} image preview`}
-                />
-              </div>
-            ) : (
-              <label className="w-64 flex flex-col items-center px-4 py-6 bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-blue-400">
-                <svg className="w-8 h-8" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                  <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
-                </svg>
-                <span className="mt-2 text-base leading-normal">Selecciona una imagen</span>
-              </label>
-            )}
+            <div className="flex w-full  items-center justify-center bg-grey-lighter rounded relative">
+              <input
+                type="file"
+                accept="image/*"
+                name="img"
+                onChange={handleImageChange}
+                required
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  opacity: 0, 
+                  zIndex: 2,
+                  cursor: 'pointer'
+                }}
+              />
+              {product.img && (
+                <div className="bg-gray-600 rounded-lg flex items-center justify-center">
+                  <img
+                    src={window.URL.createObjectURL(product.img)}
+                    alt={`${product.name} image preview`}
+                  />
+                </div>
+              )}
+              {!product.img && (
+                <label className="w-64 flex flex-col items-center px-4 py-6 bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-blue-400">
+                  <svg className="w-8 h-8" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                    <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
+                  </svg>
+                  <span className="mt-2 text-base leading-normal">Selecciona una imagen</span>
+                </label>
+              )}
+            </div>
           </div>
-        </div>
 
         <div className="md:flex-1 m-5 pl-5">
           <div className="bg-white shadow-md rounded px-4 pb-0 flex flex-col h-full justify-center">
