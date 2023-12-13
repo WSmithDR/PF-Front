@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import AuthModal from "../components/AuthModal";
 import PurchaseCard from '../components/PurchaseCard';
-import { finishPurchase, addToCart } from '../redux/actions';
+import { finishPurchase } from '../redux/actions';
 
 const ShoppingCart = () => {
   const dispatch = useDispatch();
@@ -15,14 +15,14 @@ const ShoppingCart = () => {
   const [cart, setCart] = useState([])
 
   useEffect(() => {
-    if (cartReducer.length > 0) {
-      dispatch(addToCart(storedCartItems))
-    }
+    
+    setCart(storedCartItems || cartReducer)
+
     return () => {
       setCart(storedCartItems)
     }
-  }, [])
-
+    
+  }, [storedCartItems]);
 
   const showModal = () => {
     setIsModalOpen(true);

@@ -2,8 +2,10 @@ import { NavLink } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { removeFromCart } from '../redux/actions'
 
+
 const PurchaseCard = ({ brand, category, price, name, img, purchaseDate, _id, cart, quantity }) => {
   const dispatch = useDispatch();
+
 
   const handleDelete = () => {
     console.log('este es el id:', _id);
