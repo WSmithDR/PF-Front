@@ -24,7 +24,10 @@ const AdminProducts = () => {
       icon: 'success',
       timer: 1500,
       showConfirmButton: false,
-    });
+    })
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
   };
 
   return (

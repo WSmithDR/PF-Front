@@ -25,7 +25,11 @@ const AdminDeletedProducts = () => {
       timer: 1500,
       showConfirmButton: false,
     });
-  };
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
+  }
+  
 
   return (
     <div className="flex flex-col min-h-screen bg-blue-200">
