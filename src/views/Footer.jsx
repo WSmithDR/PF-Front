@@ -1,5 +1,5 @@
-import { NavLink, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
 
 const Footer = () => {
   const location = useLocation();
@@ -34,7 +34,7 @@ const Footer = () => {
           <hr className="my-6 border-gray-200 dark:border-gray-700 md:my-10" />
 
           <div className="flex flex-col items-center justify-between sm:flex-row">
-          <a href="#" className="text-2xl font-bold text-gray-800 transition-colors duration-300 hover:text-gray-700 dark:text-white dark:hover:text-gray-300">Electronic Ecommerce</a>
+          <a href="#" className="text-2xl font-bold text-gray-800 transition-colors duration-300 hover:text-gray-700 dark:text-white dark:hover:text-gray-300">Elitronic</a>
 
           <p className="mt-4 text-sm text-gray-500 dark:text-gray-300 sm:mt-0">© Copyright 2023. Todos los derechos reservados.</p>
           </div>
