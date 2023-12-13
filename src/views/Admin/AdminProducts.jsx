@@ -1,10 +1,10 @@
-import { useEffect } from 'react'; 
-import { useSelector, useDispatch } from 'react-redux';
-import { getAllProducts, deleteProduct } from '../../redux/actions';
-import Swal from 'sweetalert2';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import Pagination from '../../components/Pagination/Pagination';
 import Selection from '../../components/Selection/Selection';
+import { deleteProduct, getAllProducts } from '../../redux/actions';
 
 const AdminProducts = () => {
   const dispatch = useDispatch();
@@ -24,12 +24,15 @@ const AdminProducts = () => {
       icon: 'success',
       timer: 1500,
       showConfirmButton: false,
-    });
+    })
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-blue-200">
-      <div className="p-5 ml-72 h-full">
+    <div className="p-5 pt-10 bg-gray-900 ml-72 h-full min-h-[100vh]">
+      <div className="p-5 rounded-xl bg-gray-950 shadow mt-9 h-full">
         <h2 className="text-center text-lg font-semibold p-4 text-blue-500">Tus Productos</h2>
         <div className="text-center mb-4">
           <NavLink to="/dashboard/products/deleted">

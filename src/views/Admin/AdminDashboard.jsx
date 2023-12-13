@@ -1,9 +1,9 @@
-import CardsUserProduct from "../../components/CardsUserProduct";
-import { getUserProducts } from "../../redux/actions";
+import Chart from "chart.js/auto";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Chart from "chart.js/auto";
 import { NavLink } from "react-router-dom";
+import CardsUserProduct from "../../components/CardsUserProduct";
+import { getUserProducts } from "../../redux/actions";
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
@@ -26,7 +26,7 @@ const AdminDashboard = () => {
     }
   }, [users, products]);
 
-  const renderUsersChart = (usersData) => {
+  const renderUsersChart = () => {
     destroyChart("usersChart"); 
     const usersChartCanvas = document.getElementById("usersChart");
     new Chart(usersChartCanvas, {
@@ -56,7 +56,7 @@ const AdminDashboard = () => {
     });
   };
 
-  const renderCommercesChart = (productsData) => {
+  const renderCommercesChart = () => {
     destroyChart("commercesChart"); 
     const commercesChartCanvas = document.getElementById("commercesChart");
     new Chart(commercesChartCanvas, {
@@ -95,7 +95,7 @@ const AdminDashboard = () => {
 
   return (
     <div>
-      <div className="flex-1 pb-5 bg-gray-900 p-4 ml-72">
+      <div className="flex-1 pb-5 min-h-[100vh] bg-gray-900 p-4 ml-72">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2 p-2">
       
           <div className="text-center align-center justify-center">

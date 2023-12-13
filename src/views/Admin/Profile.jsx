@@ -1,9 +1,9 @@
 import { jwtDecode } from 'jwt-decode';
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserData, putUserData, getAdminProducts } from "../../redux/actions";
-import ProductCreated from './ProductCreated';
 import { NavLink } from 'react-router-dom';
+import { getAdminProducts, getUserData, putUserData } from "../../redux/actions";
+import ProductCreated from './ProductCreated';
 
 const Profile = () => {
   const token = localStorage.getItem('token');
@@ -43,7 +43,7 @@ const Profile = () => {
 
   const [sectionMyProducts, setSectionMyProducts] = useState(false);
 
-  const handleSectionChange = (section) => {
+  const handleSectionChange = () => {
     setSectionMyProducts(!sectionMyProducts);
   }
 
@@ -107,10 +107,6 @@ const Profile = () => {
             <div className='cursor-pointer bg-gray-800 hover:bg-gray-700 rounded-lg mr-1 hover-text-gray-900'onClick={handleSectionChange}>
               <p className="text-gray-50 text-xl">{quantityProducts}</p>
               <p className="font-bold pb-1 text-gray-50">Creados</p>
-            </div>
-            <div className='cursor-pointer mr-1 hover:bg-gray-700 bg-gray-800 rounded-lg'>
-              <p className="text-gray-50 text-xl">10</p>
-              <p className="font-bold text-gray-50">Ventas</p>
             </div>
             <div className='cursor-pointer hover:bg-gray-700 bg-gray-800 mr-1 rounded-lg'>
               <p className="text-gray-50 text-xl">89</p>

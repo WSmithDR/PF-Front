@@ -4,9 +4,11 @@ import Buttons from "./Buttons";
 
 const Pagination = ({info}) => {
     const dispatch = useDispatch()
+    
     const currentPage = useSelector(state => state.currentPage)
     const itemsPerPage = 12;
     const totalPages = Math.ceil(info?.total / itemsPerPage);
+
     console.log(totalPages)
 
     const handlePageChange = (newPage) => {
