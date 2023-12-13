@@ -1,18 +1,9 @@
-<<<<<<< HEAD
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
-import Swal from 'sweetalert2';
-import Pagination from '../../components/Pagination/Pagination';
-import { deleteUser, getAllUsers } from '../../redux/actions';
-=======
 import { useEffect, useState } from 'react'; 
 import { useSelector, useDispatch } from 'react-redux';
 import { getAllUsers, deleteUser, putUserAdmin } from '../../redux/actions';
 import Swal from 'sweetalert2';
 import { NavLink } from 'react-router-dom';
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
->>>>>>> e885566 (corrigiendo la alineacion del componente de seleccion)
 
 const AdminUser = () => {
   const dispatch = useDispatch();
@@ -93,15 +84,6 @@ const AdminUser = () => {
 
   const totalPages = Math.ceil(filteredUsers.length / pageSize);
   return (
-<<<<<<< HEAD
-    <div className="p-5 pt-10 bg-gray-900 ml-72 h-full min-h-[100vh]">
-      <div className="p-5 rounded-xl bg-gray-950 shadow mt-9 h-fulls">
-        <h2 className="text-center text-lg font-semibold p-4 text-blue-500">Tus Usuarios</h2>
-        <div className="text-center mb-4">
-          <NavLink to="/dashboard/users/deleted">
-            <button className="bg-gray-500 text-white p-2 rounded">Usuarios Borrados</button>
-          </NavLink>
-=======
     <div className="items-center p-5 ml-72 pt-10 justify-center min-h-screen bg-gray-900">
       <div className="col-span-12">
         
@@ -182,7 +164,6 @@ const AdminUser = () => {
               <FaArrowRight />
             </button>
           </div>
->>>>>>> e885566 (corrigiendo la alineacion del componente de seleccion)
         </div>
 
           <table className="table w-full text-gray-400 text-center border-separate text-sm">
