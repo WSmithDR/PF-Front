@@ -8,6 +8,7 @@ const PurchaseCard = ({ brand, category, price, name, img, purchaseDate, _id, ca
 
   const handleDelete = () => {
     dispatch(removeFromCart(_id));
+    window.location.reload();
   }
 
   return (

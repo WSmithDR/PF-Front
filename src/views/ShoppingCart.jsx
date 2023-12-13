@@ -8,7 +8,7 @@ import { finishPurchase } from '../redux/actions';
 
 const ShoppingCart = () => {
   const dispatch = useDispatch();
-  const storedCartItems = useSelector(state => state.cart)
+  const storedCartItems = JSON.parse(localStorage.getItem('cart')) || [];
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
