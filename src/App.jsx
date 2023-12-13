@@ -1,23 +1,23 @@
-import CreateProduct from './views/Admin/CreateProduct.jsx';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import Detail from './components/Products/Detail';
 import Searchs from './components/Searchs';
-import Home from './views/Home';
-import ShoppingCart from './views/ShoppingCart';
-import Landing from './views/Landing';
-import NavBar from './views/User/navBar.jsx';
-import SideBar from './views/Admin/SideBar.jsx';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import About from './views/About.jsx';
 import AdminDashboard from './views/Admin/AdminDashboard.jsx';
 import AdminProducts from './views/Admin/AdminProducts.jsx';
 import AdminUser from './views/Admin/AdminUser.jsx';
+import CreateProduct from './views/Admin/CreateProduct.jsx';
 import Profile from './views/Admin/Profile.jsx';
-import About from './views/About.jsx';
+import SideBar from './views/Admin/SideBar.jsx';
 import Footer from './views/Footer.jsx';
+import Home from './views/Home';
+import Landing from './views/Landing';
+import ShoppingCart from './views/ShoppingCart';
+import NavBar from './views/User/navBar.jsx';
 
+import AdminDeletedProducts from './views/Admin/AdminDeletedProducts.jsx';
+import AdminDeletedUsers from './views/Admin/AdminDeletedUsers.jsx';
 import ProfileUser from './views/User/ProfileUser.jsx';
 import UserPurchase from './views/User/UserPurchase.jsx';
-import AdminDeletedUsers from './views/Admin/AdminDeletedUsers.jsx'
-import AdminDeletedProducts from './views/Admin/AdminDeletedProducts.jsx'
 
 const App = () => {
   const location = useLocation()
