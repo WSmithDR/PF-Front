@@ -1,7 +1,8 @@
-import { useState } from "react";
-import validation from '../../utils/Validation/validationCreateProducts';
 import axios from "axios";
+import { useState } from "react";
 import Swal from 'sweetalert2';
+import { URL } from "../../redux/actions";
+import validation from '../../utils/Validation/validationCreateProducts';
 
 const CreateProduct = () => {
 
@@ -48,7 +49,7 @@ const CreateProduct = () => {
     event.preventDefault();
     try {
       const token = localStorage.getItem("token");
-      const { data } = await axios.post('http://localhost:3001/product', product, {
+      const { data } = await axios.post(`${URL}/product`, product, {
         headers: {
           'x-access-token': token,
           'Content-Type': 'multipart/form-data'
@@ -107,7 +108,8 @@ const CreateProduct = () => {
   }
 
   return (
-    <div className="pl-72 ml-10 pr-10 p-9 pb-10 pt-10 min-h-[80vh] bg-gray-900">        
+    <div className="p-5 pt-10 bg-gray-900 ml-72 h-full min-h-[100vh]">
+    <div className="p-5 rounded-xl bg-gray-950 shadow mt-9 h-full">        
       <form
         encType="multipart/form-data"
         onSubmit={handleSubmit}
@@ -306,6 +308,7 @@ const CreateProduct = () => {
           </div>
         </div>
       </form>
+    </div>
     </div>
   );
 };

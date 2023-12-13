@@ -24,7 +24,7 @@ const ShoppingCart = () => {
   };
 
   const isUserLoggedIn = !!localStorage.getItem("token");
-  const totalAmount = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const totalAmount = storedCartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
   const formattedNumber = parseFloat(totalAmount).toFixed(2);
 
   const handleFinishPurchase = () => {

@@ -1,9 +1,9 @@
-import CardsUserProduct from "../../components/CardsUserProduct";
-import { getUserProducts } from "../../redux/actions";
+import Chart from "chart.js/auto";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Chart from "chart.js/auto";
 import { NavLink } from "react-router-dom";
+import CardsUserProduct from "../../components/CardsUserProduct";
+import { getUserProducts } from "../../redux/actions";
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
@@ -26,7 +26,7 @@ const AdminDashboard = () => {
     }
   }, [users, products]);
 
-  const renderUsersChart = (usersData) => {
+  const renderUsersChart = () => {
     destroyChart("usersChart"); 
     const usersChartCanvas = document.getElementById("usersChart");
     new Chart(usersChartCanvas, {
@@ -56,7 +56,7 @@ const AdminDashboard = () => {
     });
   };
 
-  const renderCommercesChart = (productsData) => {
+  const renderCommercesChart = () => {
     destroyChart("commercesChart"); 
     const commercesChartCanvas = document.getElementById("commercesChart");
     new Chart(commercesChartCanvas, {

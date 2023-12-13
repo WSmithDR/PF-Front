@@ -38,7 +38,7 @@ import {
   UPDATE_PRODUCTS,
 } from './types';
 
-const URL = 'https://pfback1-q5aoyanf.b4a.run'
+export const URL = 'https://pfback1-q5aoyanf.b4a.run'
 
 export function setFilters(filters){
  return {
@@ -95,15 +95,24 @@ export function getProductsById(_id) {
 
 export function getProductReview(productId) {
   return async function (dispatch) {
-    const {data} = await axios.get(`${URL}/review/${productId}`);
-    console.log(data);
-    dispatch({
-      type: GET_REVIEWS,
-      payload: data
-    })
-  }
+    try {
+      const { data } = await axios.get(`${URL}/review/${productId}`);     
+      if (data.length === 0) {       
+        dispatch({
+          type: GET_REVIEWS,
+          payload: [{}],
+        });
+      } else {     
+        dispatch({
+          type: GET_REVIEWS,
+          payload: data,
+        });
+      }
+    } catch (error) {
+      console.error('Error fetching product reviews:', error);
+    }
+  };
 }
-
  export function createProduct(newproduct) {
  console.log(newproduct);
  return async function (dispatch) {

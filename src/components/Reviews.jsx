@@ -1,4 +1,3 @@
-
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProductReview } from '../redux/actions'; 
@@ -8,19 +7,23 @@ const Reviews = ({ productId }) => {
   const reviews = useSelector((state) => state.reviews);
 
   useEffect(() => {
-  
     dispatch(getProductReview(productId));
   }, [dispatch, productId]);
 
+
+  
   return (
     <div>
       <h2>Comentarios</h2>
-      {reviews.map((review) => (
-        <div key={review.id}>
-          <p>{review.comment}</p>
-          <p></p>
-        </div>
-      ))}
+      {reviews.length === 0 ? (
+        <p>No hay comentarios acerca de este producto.</p>
+      ) : (
+        reviews.map((review) => (
+          <div key={review.id}>
+            <p>{review.comment}</p>
+          </div>
+        ))
+      )}
     </div>
   );
 };
