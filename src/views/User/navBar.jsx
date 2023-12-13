@@ -1,14 +1,14 @@
-import { useState, useEffect, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
 import { Button } from "antd";
+import { jwtDecode } from "jwt-decode";
+import { useCallback, useEffect, useState } from "react";
+import { LuShoppingCart } from "react-icons/lu";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import LOGO from "../../assets/LOGO.png";
 import AuthModal from "../../components/AuthModal";
 import SearchBar from "../../components/SearchBar";
-import LOGO from "../../assets/LOGO.png";
-import { LuShoppingCart } from "react-icons/lu";
-import { getUserByID } from "../../redux/actions";
-import { useDispatch, useSelector } from "react-redux";
-import { jwtDecode } from "jwt-decode";
 import UserIcon from "../../components/UserIcon";
+import { getUserByID } from "../../redux/actions";
 
 const NavBar = () => {
   const dispatch = useDispatch();
@@ -78,7 +78,7 @@ const NavBar = () => {
       <div className="flex items-center space-x-4">
         <div style={{ position: 'relative' }}>
           <LuShoppingCart
-              className="w-[40px] h-[40px] text-blue-300 cursor-pointer hover:text-gray-100"
+              className="w-[40px] h-[40px] text-gray-100 cursor-pointer hover:text-gray-500"
               onClick={() => navigate("/shoppingCart")}
               title="Cart"
             />
