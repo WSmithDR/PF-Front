@@ -411,29 +411,30 @@ const reducer = (state = initialState, action) => {
         successGetUserProducts: false,
       }
 
-    case PUT_USER_ADMIN_REQUEST:
-      return{
-        ...state,
-        loadingPutUserAdmin: true,
-        errorPutUserAdmin: false,
-        successPutUserAdmin: false,
-      }
-    case PUT_USER_ADMIN_SUCCESS:
-      let allUsersPut = state.allUsers.filter(user => user.id !== action.payload.id);
-      return{
-        ...state,
-        loadingPutUserAdmin: false,
-        errorPutUserAdmin: false,
-        successPutUserAdmin: true,
-        allUsers: [...allUsersPut, action.payload],
-      }
-    case PUT_USER_ADMIN_FAILURE:
-      return{
-        ...state,
-        loadingPutUserAdmin: false,
-        errorPutUserAdmin: action.payload,
-        successPutUserAdmin: false,
-      }
+      case PUT_USER_ADMIN_REQUEST:
+        return{
+          ...state,
+          loadingPutUserAdmin: true,
+          errorPutUserAdmin: false,
+          successPutUserAdmin: false,
+        }
+      case PUT_USER_ADMIN_SUCCESS:
+        let allUsersPut = state.allUsers.filter(user => user.id !== action.payload.id);
+        return{
+          ...state,
+          loadingPutUserAdmin: false,
+          errorPutUserAdmin: false,
+          successPutUserAdmin: true,
+          allUsers: [...allUsersPut, action.payload],
+        }
+      case PUT_USER_ADMIN_FAILURE:
+        return{
+          ...state,
+          loadingPutUserAdmin: false,
+          errorPutUserAdmin: action.payload,
+          successPutUserAdmin: false,
+        }
+   
     
     default:
       return state;
