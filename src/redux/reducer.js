@@ -132,7 +132,6 @@ const reducer = (state = initialState, action) => {
       case REMOVE_FROM_CART:
         const productIdToRemove = action.payload;
         const updatedCartAfterRemoval = state.cart.filter(item => item.id !== productIdToRemove);
-        localStorage.setItem('cart', JSON.stringify(updatedCartAfterRemoval));
         return {
           ...state,
           cart: updatedCartAfterRemoval,

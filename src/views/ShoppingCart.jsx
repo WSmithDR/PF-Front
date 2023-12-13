@@ -4,16 +4,25 @@ import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import AuthModal from "../components/AuthModal";
 import PurchaseCard from '../components/PurchaseCard';
-import { finishPurchase } from '../redux/actions';
+import { finishPurchase, addToCart } from '../redux/actions';
 
 const ShoppingCart = () => {
   const dispatch = useDispatch();
   const storedCartItems = JSON.parse(localStorage.getItem('cart')) || [];
+
+  const cartReducer = useSelector((state) => state.cart);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [cart, setCart] = useState([])
 
   useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(storedCartItems));
-  }, [storedCartItems]);
+    if (cartReducer.length > 0) {
+      dispatch(addToCart(storedCartItems))
+    }
+    return () => {
+      setCart(storedCartItems)
+    }
+  }, [])
+
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -83,7 +92,7 @@ const ShoppingCart = () => {
               </tr>
             </thead>
             <tbody>
-            {storedCartItems.map((item) => (
+            {cart.map((item) => (
                   <PurchaseCard 
                     key={item.id}
                     img={item.image}

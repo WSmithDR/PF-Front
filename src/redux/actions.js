@@ -39,7 +39,7 @@ import {
   PUT_USER_ADMIN_FAILURE, PUT_USER_ADMIN_REQUEST, PUT_USER_ADMIN_SUCCESS,
 } from './types';
 
-export const URL = 'https://pfback1-q5aoyanf.b4a.run'
+export const URL = 'http://localhost:3001';
 
 export function setFilters(filters){
  return {
