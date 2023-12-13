@@ -18,7 +18,6 @@ const Register = () => {
     email: '',
     password: '',
     address: '',
-    Admin: false
   });
 
   const handleChange = (event) => {
@@ -34,14 +33,6 @@ const Register = () => {
       [name]: validation({ ...userData, [name]: value })[name]
     }));
   };
-  
-  const handleToggleAdmin = () => {
-    setUserData((prevUserData) => ({
-      ...prevUserData,
-      Admin: !prevUserData.Admin
-    }));
-  };
-
   const handleSubmit = (event) => {
     event.preventDefault();
     dispatch(postUser(userData));
@@ -54,8 +45,6 @@ const Register = () => {
   !userData.password ||
   !userData.address;
   
-  console.log(error);
-
   return (
     <div >
       { !loadingPostUser &&
@@ -137,16 +126,6 @@ const Register = () => {
               {errors.address && <p className="text-red-900 text-xs italic text-center">{errors.address}</p>}
             </div>
           </div>
-        </div>
-
-        <div className="flex items-center justify-center mb-3">
-          <button
-            className={`bg-${userData.Admin ? 'green' : 'blue'}-500 hover:bg-${userData.Admin ? 'green' : 'blue'}-700 text-white font-bold py-1 px-2 rounded-xl`}
-            type="button"
-            onClick={handleToggleAdmin}
-          >
-            {userData.Admin ? 'Administrador' : 'Comprador'}
-          </button>
         </div>
 
         <div className={div_style}>

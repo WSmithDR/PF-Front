@@ -32,7 +32,8 @@ import {
   RESTORE_USER,
   SEND_TOKEN_GOOGLE_FAILURE, SEND_TOKEN_GOOGLE_REQUEST, SEND_TOKEN_GOOGLE_SUCCESS,
   SET_CURRENT_PAGE,
-  UPDATE_PRODUCTS
+  UPDATE_PRODUCTS,
+  PUT_USER_ADMIN_FAILURE, PUT_USER_ADMIN_REQUEST, PUT_USER_ADMIN_SUCCESS,
 } from './types';
 
 const reducer = (state = initialState, action) => {
@@ -156,6 +157,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         allUsers: action.payload,
       };
+
     case GET_USER_BY_ID:
       return {
         ...state,
@@ -409,6 +411,31 @@ const reducer = (state = initialState, action) => {
         errorGetUserProducts: action.payload,
         successGetUserProducts: false,
       }
+
+    case PUT_USER_ADMIN_REQUEST:
+      return{
+        ...state,
+        loadingPutUserAdmin: true,
+        errorPutUserAdmin: false,
+        successPutUserAdmin: false,
+      }
+    case PUT_USER_ADMIN_SUCCESS:
+      let allUsersPut = state.allUsers.filter(user => user.id !== action.payload.id);
+      return{
+        ...state,
+        loadingPutUserAdmin: false,
+        errorPutUserAdmin: false,
+        successPutUserAdmin: true,
+        allUsers: [...allUsersPut, action.payload],
+      }
+    case PUT_USER_ADMIN_FAILURE:
+      return{
+        ...state,
+        loadingPutUserAdmin: false,
+        errorPutUserAdmin: action.payload,
+        successPutUserAdmin: false,
+      }
+    
     default:
       return state;
   }

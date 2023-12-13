@@ -36,9 +36,14 @@ import {
   SEND_TOKEN_GOOGLE_FAILURE, SEND_TOKEN_GOOGLE_REQUEST, SEND_TOKEN_GOOGLE_SUCCESS,
   SET_CURRENT_PAGE, SET_FILTERS,
   UPDATE_PRODUCTS,
+  PUT_USER_ADMIN_FAILURE, PUT_USER_ADMIN_REQUEST, PUT_USER_ADMIN_SUCCESS,
 } from './types';
 
+<<<<<<< HEAD
 export const URL = 'https://pfback1-q5aoyanf.b4a.run'
+=======
+const URL = 'http://localhost:3001';
+>>>>>>> e885566 (corrigiendo la alineacion del componente de seleccion)
 
 export function setFilters(filters){
  return {
@@ -250,7 +255,7 @@ export function getAllUsers() {
    dispatch({
      type: GET_ALL_USERS,
      payload: allUsers.data,
-   }); console.log(allUsers);
+    });
  };
 }
 
@@ -553,4 +558,29 @@ export const getUserProducts = () => {
      dispatch(getUserProductsError(error.response.data.error));
    }
  };
+};
+
+
+export const putUserAdminRequest = () => ({
+  type: PUT_USER_ADMIN_REQUEST
+});
+export const putUserAdminSuccess = (data) => ({
+  type: PUT_USER_ADMIN_SUCCESS,
+  payload: data
+});
+export const putUserAdminError = (error) => ({
+  type: PUT_USER_ADMIN_FAILURE,
+  payload: error
+});
+export const putUserAdmin = (userId) => {
+  return async (dispatch) => {
+    dispatch(putUserAdminRequest());
+    try {
+      const { data } = await axios.put(`${URL}/user/admin/${userId}`, { headers: { 'Cache-Control': 'no-cache'}});
+      console.log(data);
+      dispatch(putUserAdminSuccess(data));
+    } catch (error) {
+      dispatch(putUserAdminError(error.response));
+    }
+  };
 };
