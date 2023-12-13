@@ -39,7 +39,9 @@ import {
   PUT_USER_ADMIN_FAILURE, PUT_USER_ADMIN_REQUEST, PUT_USER_ADMIN_SUCCESS,
 } from './types';
 
-export const URL = 'https://pfback1-q5aoyanf.b4a.run'
+export const URL = 'https://pfback1-q5aoyanf.b4a.run';
+
+//'http://localhost:3001'
 
 export function setFilters(filters){
  return {
@@ -246,15 +248,15 @@ export function finishPurchase(objectPago) {
 
 
 export function getAllUsers() {
- return async function (dispatch) {
-   const allUsers = await axios.get(`${URL}/user`);
-   dispatch({
-     type: GET_ALL_USERS,
-     payload: allUsers.data,
-    });
- };
+  return async function (dispatch) {
+    const allUsers = await axios.get(`${URL}/user`);
+    dispatch({
+      type: GET_ALL_USERS,
+      payload: allUsers.data,
+     });
+  };
 }
-
+  
 export function deleteUser(id) {
  return async function (dispatch) {
    const deletedUser = await axios.put(`${URL}/user/delete/${id}`, { headers: { 'Cache-Control': 'no-cache'}});
@@ -266,13 +268,13 @@ export function deleteUser(id) {
 }
 
 export function getAllUsersDeleted() {
- return async function (dispatch) {
-   const allUsersDeleted = await axios.get(`${URL}/user/deleted`, { headers: { 'Cache-Control': 'no-cache' }});
-   dispatch({
-     type: GET_ALL_USERS_DELETED,
-     payload: allUsersDeleted.data,
-   });
- };
+  return async function (dispatch) {
+    const allUsersDeleted = await axios.get(`${URL}/user/deleted`, { headers: { 'Cache-Control': 'no-cache' }});
+    dispatch({
+      type: GET_ALL_USERS_DELETED,
+      payload: allUsersDeleted.data,
+    });
+  };
 }
 
 export function restoreUser(id) {
@@ -560,15 +562,15 @@ export const getUserProducts = () => {
 export const putUserAdminRequest = () => ({
   type: PUT_USER_ADMIN_REQUEST
 });
-export const putUserAdminSuccess = (data) => ({
+ export const putUserAdminSuccess = (data) => ({
   type: PUT_USER_ADMIN_SUCCESS,
   payload: data
 });
-export const putUserAdminError = (error) => ({
+ export const putUserAdminError = (error) => ({
   type: PUT_USER_ADMIN_FAILURE,
   payload: error
 });
-export const putUserAdmin = (userId) => {
+ export const putUserAdmin = (userId) => {
   return async (dispatch) => {
     dispatch(putUserAdminRequest());
     try {
