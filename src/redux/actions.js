@@ -37,6 +37,7 @@ import {
   SET_CURRENT_PAGE, SET_FILTERS,
   UPDATE_PRODUCTS,
   PUT_USER_ADMIN_FAILURE, PUT_USER_ADMIN_REQUEST, PUT_USER_ADMIN_SUCCESS,
+  CLEAR_MESSAGE_STATUS
 } from './types';
 
 export const URL = 'https://pfback1-q5aoyanf.b4a.run';
@@ -87,7 +88,6 @@ export function setFilters(filters){
  export function getProductsById(_id) {
   return async function (dispatch) {
     const { data } = await axios.get(`${URL}/product/${_id}`);
-    console.log(data);
     dispatch({
       type: GET_PRODUCTS_BY_ID,
       payload: data,
@@ -116,12 +116,9 @@ export function setFilters(filters){
    };
  }
   export function createProduct(newproduct) {
-  console.log(newproduct);
   return async function (dispatch) {
     try {
       const { data } = await fetch.post(`${URL}/product`, newproduct);
-      console.log(data);
-      console.log(newproduct);
  
       dispatch({
         type: CREATE_NEW_PRODUCT,
@@ -151,9 +148,7 @@ export function setFilters(filters){
   };
  }
  export function updateProduct(payload) {
-  return async function (dispatch) {
-    console.log(payload.id);
- 
+  return async function (dispatch) { 
     const info = await fetch.put(`${URL}/product/${payload.id}`, payload);
  
     dispatch({
@@ -165,7 +160,6 @@ export function setFilters(filters){
  export function getDeletedProducts() {
   return async function (dispatch) {
     const getDeletedProducts = await axios.get(`${URL}/product/deleted`, { headers: { 'Cache-Control': 'no-cache' }});
-    console.log(getDeletedProducts);
     dispatch({
       type: GET_DELETED_PRODUCTS,
       payload: getDeletedProducts.data,
@@ -348,7 +342,6 @@ export function setFilters(filters){
         localStorage.setItem("token", data.accessToken);
         localStorage.setItem("access", data.access)
       }
-      console.log(data);
       dispatch(postUserSuccess(data));
     } catch (error) {
       dispatch(postUserFailure(error.response.data.error));
@@ -416,7 +409,6 @@ export function setFilters(filters){
     dispatch(postMessageRequest());
     try {
       const { data } = await axios.post(`${URL}/user/messages`, message);
-      console.log(data);
       dispatch(postMessageSuccess(data));
     } catch (error) {
       dispatch(postMessageError(error.response.data.error));
@@ -580,7 +572,6 @@ export function setFilters(filters){
      dispatch(putUserAdminRequest());
      try {
        const { data } = await axios.put(`${URL}/user/admin/${userId}`, { headers: { 'Cache-Control': 'no-cache'}});
-       console.log(data);
        dispatch(putUserAdminSuccess(data));
      } catch (error) {
        dispatch(putUserAdminError(error.response));

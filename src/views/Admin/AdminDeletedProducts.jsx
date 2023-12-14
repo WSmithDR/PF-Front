@@ -9,8 +9,7 @@ import Selection from '../../components/Selection/Selection';
 const AdminDeletedProducts = () => {
   const dispatch = useDispatch();
   const deletedProducts = useSelector((state) => state.deletedProducts);
-  const info = useSelector((state) => state.products?.info);
-  console.log(deletedProducts)
+  const info = useSelector((state) => state.deletedProducts?.info);
 
   useEffect(() => {
     dispatch(getDeletedProducts());
@@ -32,12 +31,12 @@ const AdminDeletedProducts = () => {
   
 
   return (
-    <div className="flex flex-col min-h-screen bg-blue-200">
-      <div className="p-5 ml-72 h-full">
-        <h2 className="text-center text-lg font-semibold p-4 text-blue-500">Productos desactivados</h2>
+    <div className="flex flex-col min-h-[100vh] bg-gray-900">
+      <div className="p-5 ml-72 min-h-[100vh]">
+        <h2 className="text-center text-lg font-semibold p-4 text-white">Productos desactivados</h2>
         <div className="text-center mb-4">
           <NavLink to="/dashboard/products">
-            <button className="bg-gray-500 text-white p-2 rounded">Productos</button>
+            <button className="bg-gray-500 hover:bg-gray-600 text-white p-2 rounded">Productos</button>
           </NavLink>
         </div>
         <div>

@@ -78,9 +78,6 @@ const UserPurchase = () => {
     const sorted = handleSort(filtered, sortBy);
     setFilteredProducts(handlePagination(sorted, currentPage, pageSize));
   }, [sortBy, nameFilter, priceMin, priceMax, currentPage, pageSize]);
-
-  console.log(userPurchase);
-  console.log(filteredProducts);
   
   return (
     <div className="items-center p-5 mt-5 pt-10 justify-center min-h-screen bg-gray-900">

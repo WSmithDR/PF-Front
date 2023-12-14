@@ -31,9 +31,9 @@ const AdminProducts = () => {
   };
 
   return (
-    <div className="p-5 pt-10 bg-gray-900 ml-72 h-full min-h-[100vh]">
-      <div className="p-5 rounded-xl bg-gray-950 shadow mt-9 h-full">
-        <h2 className="text-center text-lg font-semibold p-4 text-blue-500">Tus Productos</h2>
+    <div className="ml-72 flex flex-col min-h-[100vh] bg-gray-900">
+      <div className="p-5 rounded-xl  shadow h-full">
+        <h2 className="text-center text-lg font-semibold p-4 text-white">Tus Productos</h2>
         <div className="text-center mb-4">
           <NavLink to="/dashboard/products/deleted">
             <button className="bg-gray-500 text-white p-2 rounded">Productos Desactivados</button>

@@ -9,8 +9,6 @@ const Pagination = ({info}) => {
     const itemsPerPage = 12;
     const totalPages = Math.ceil(info?.total / itemsPerPage);
 
-    console.log(totalPages)
-
     const handlePageChange = (newPage) => {
         if (newPage >= 1 && newPage <= totalPages) {
           dispatch(setCurrentPage(newPage))

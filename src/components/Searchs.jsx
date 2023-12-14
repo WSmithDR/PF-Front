@@ -54,9 +54,9 @@ const Searchs = () => {
 
     const saleValue = parseInt(filters.sale, 10);
     if (saleValue === 1) {
-      filteredProducts = filteredProducts.filter((product) => product.sale >= 1);
+      filteredProducts = filteredProducts.filter((product) => product.sales >= 1);
     } else if (saleValue === 0) {
-      filteredProducts = filteredProducts.filter((product) => product.sale < 1);
+      filteredProducts = filteredProducts.filter((product) => product.sales < 1);
     }
 
     if (filters.price === 'highest') {
@@ -108,8 +108,6 @@ const Searchs = () => {
   };
 
   const hasAppliedFilters = filters.category || filters.sale !== '3' || filters.price;
-
-  console.log(productsByName);
 
   return (
     <div className="relative h-full bg-gray-900 min-h-[100vh] bg-blue-200">
@@ -209,6 +207,7 @@ const Searchs = () => {
                   img={product.img}
                   description={product.description}
                   _id={product._id}
+                  sales={product.sales}
                 />
               ))}
             </div>
