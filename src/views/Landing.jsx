@@ -1,13 +1,17 @@
 import { useState } from "react";
 import { FaLinkedin, FaGithub } from "react-icons/fa";
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { postMessage } from "../redux/actions";
+import { useDispatch, useSelector } from 'react-redux';
+import { postMessage, clearMessageStatus } from "../redux/actions";
 import AuthModal from "../components/AuthModal";
 import { Button } from "antd";
 import wagner from "../assets/images/wagner.jpg";
+import Swal from 'sweetalert2';
 
 const Landing = () => {
+  const successPostMessage = useSelector((state) => state.successPostMessage);
+  const errorrPostMessage = useSelector((state) => state.errorrPostMessage);
+
   const dispatch = useDispatch(); 
   const navigate = useNavigate();
 
@@ -49,10 +53,29 @@ const Landing = () => {
     })
   };
 
+  if (successPostMessage) {
+    Swal.fire({
+      icon: 'success',
+      title: 'Mensaje enviado correctamente',
+      showConfirmButton: false,
+      timer: 1500
+    })
+    dispatch(clearMessageStatus());
+  }
+
+  if (errorrPostMessage) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: errorrPostMessage,
+    })
+  }
+
   const isUserLoggedIn = !!localStorage.getItem("token");
 
   const toHome = () => {
     navigate('/home');
+    window.scrollTo(0, 0)
   }
 
   return (

@@ -107,13 +107,6 @@ const ProfileUser = () => {
               <p className="text-gray-50 text-xl">{quantityPurchases}</p>
               <p className="font-bold pb-1 text-gray-50">Mis compras</p>
             </div>
-
-            <div 
-              className='cursor-pointer bg-gray-800 hover:bg-gray-700 rounded-lg mr-1 hover-text-gray-900'
-            >
-              <p className="text-gray-50 text-xl">0</p>
-              <p className="font-bold pb-1 text-gray-50">Mis opiniones</p>
-            </div>
           </div>
 
           <div className="relative">

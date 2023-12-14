@@ -34,6 +34,7 @@ import {
   SET_CURRENT_PAGE,
   UPDATE_PRODUCTS,
   PUT_USER_ADMIN_FAILURE, PUT_USER_ADMIN_REQUEST, PUT_USER_ADMIN_SUCCESS,
+  CLEAR_MESSAGE_STATUS
 } from './types';
 
 const reducer = (state = initialState, action) => {
@@ -273,6 +274,14 @@ const reducer = (state = initialState, action) => {
         errorGetUserData: false,
         successGetUserData: false,
       };
+
+    case CLEAR_MESSAGE_STATUS:
+      return {
+        ...state,
+        loadingPostMessage: false, 
+        errorPostMessage: false,
+        successPostMessage: false,
+      }
 
     case POST_MESSAGE_REQUEST:
       return{
