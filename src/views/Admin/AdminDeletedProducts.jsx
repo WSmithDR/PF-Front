@@ -10,7 +10,6 @@ const AdminDeletedProducts = () => {
   const dispatch = useDispatch();
   const deletedProducts = useSelector((state) => state.deletedProducts);
   const info = useSelector((state) => state.deletedProducts?.info);
-  console.log(deletedProducts)
 
   useEffect(() => {
     dispatch(getDeletedProducts());

@@ -71,8 +71,6 @@ const CreateProduct = () => {
     setErrorBack('');
   }
 
-  console.log(errorBack);
-
   const isFormValid =
   product.img === null ||
   !product.name ||

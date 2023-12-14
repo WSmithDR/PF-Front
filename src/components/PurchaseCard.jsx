@@ -8,9 +8,7 @@ const PurchaseCard = ({ brand, category, price, name, img, purchaseDate, _id, ca
 
 
   const handleDelete = () => {
-    console.log('este es el id:', _id);
     dispatch(removeFromCart(_id));
-    // window.location.reload();
     console.log('este es el id2');
   }
 
