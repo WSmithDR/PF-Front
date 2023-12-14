@@ -1,8 +1,9 @@
+import React from 'react';
 
 const Buttons = ({ currentPage, totalPages, handlePageChange }) => {
- const paginationItems = [];
-  
- for (let i = 1; i <= totalPages; i++) {
+  const paginationItems = [];
+
+  for (let i = 1; i <= totalPages; i++) {
     paginationItems.push(
       <li key={i}>
         <button
@@ -13,20 +14,33 @@ const Buttons = ({ currentPage, totalPages, handlePageChange }) => {
             pointerEvents: i === currentPage ? 'none' : 'auto',
           }}
           className={`border border-gray-300 hover:bg-gray-100 hover:text-gray-700 leading-tight py-2 px-3`}
-          onClick={() => handlePageChange(i)}
+          onClick={() => {
+            handlePageChange(i);
+            scrollToTop();
+          }}
         >
           {i}
         </button>
       </li>
     );
- }
+  }
 
- return (
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth', // Optional: smooth scrolling animation
+    });
+  };
+
+  return (
     <>
       <li>
         <button
           className={`bg-white border border-gray-950 text-gray-500 hover:bg-gray-100 hover:text-gray-700 ml-0 rounded-l-lg leading-tight py-2 px-3 dark:bg-gray-800 dark:border-gray-950 dark:text-gray-50 dark:hover:bg-gray-700 dark:hover:text-white ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
-          onClick={() => handlePageChange(currentPage - 1)}
+          onClick={() => {
+            handlePageChange(currentPage - 1);
+            scrollToTop();
+          }}
           disabled={currentPage === 1}
         >
           Anterior
@@ -36,14 +50,17 @@ const Buttons = ({ currentPage, totalPages, handlePageChange }) => {
       <li>
         <button
           className={`bg-white border border-gray-950 text-gray-500 hover:bg-gray-100 hover:text-gray-700 ml-0 rounded-r-lg leading-tight py-2 px-3 dark:bg-gray-800 dark:border-gray-950 dark:text-gray-50 dark:hover:bg-gray-700 dark:hover:text-white ${currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : ''}`}
-          onClick={() => handlePageChange(currentPage + 1)}
+          onClick={() => {
+            handlePageChange(currentPage + 1);
+            scrollToTop();
+          }}
           disabled={currentPage === totalPages}
         >
           Siguiente
         </button>
       </li>
     </>
- );
+  );
 };
 
 export default Buttons;
