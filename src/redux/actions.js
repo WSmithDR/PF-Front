@@ -322,11 +322,11 @@ export const createReviewError = (error) => ({
   type: CREATE_REVIEW_FAILURE,
   payload: error
 });
-export const createReview = (review) => {
+export const createReview = (datas) => {
   return async (dispatch) => {
     dispatch(createReviewRequest());
     try {
-      const { data } = await axios.post(`${URL}/review`, review);
+      const { data } = await axios.post(`${URL}/review`, datas);
       dispatch(createReviewSuccess(data));
     } catch (error) {
       dispatch(createReviewError(error.response.data.error));

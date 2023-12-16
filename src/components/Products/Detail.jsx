@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import { addToCart, getDetailProduct, getReviews } from '../../redux/actions';
-import Reviews from '../Reviews';
+import { addToCart, getDetailProduct } from '../../redux/actions';
+import Reviews from '../Review/Reviews';
 
 const Detail = () => {
   const { id } = useParams();
@@ -13,7 +13,6 @@ const Detail = () => {
 
   useEffect(() => {
     dispatch(getDetailProduct(id));
-    dispatch(getReviews(id));
   }, [dispatch, id]);
 
   const handleQuantityChange = (event) => {
@@ -42,8 +41,8 @@ const Detail = () => {
   };
 
   return (
-    <div className='py-40 min-h-[100vh] bg-gray-300 h-screen'>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
+    <div className='py-40 bg-gray-900 h-full'>
+      <div className="max-w-7xl mx-auto  px-4 sm:px-6 lg:px-8 mt-6">
         <div className="flex flex-col md:flex-row -mx-4">
           <div className="md:flex-1 px-4">
             <div
@@ -61,7 +60,6 @@ const Detail = () => {
                 className="w-full h-full object-contain rounded-lg p-2"
               />
             </div>
-            <Reviews productId={id} />
             </div>
           </div>
           <div className="md:flex-1 px-4">
@@ -98,7 +96,6 @@ const Detail = () => {
                 </select>
               </div>
 
-
               <button type="button"
                onClick={handleAddToCart}
               className="h-14 px-6 py-2 font-semibold rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white">
@@ -108,6 +105,7 @@ const Detail = () => {
           </div>
         </div>
       </div>
+      <Reviews productId={id} />
     </div>
  );
 };
