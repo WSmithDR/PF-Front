@@ -9,20 +9,9 @@ import { finishPurchase } from '../redux/actions';
 const ShoppingCart = () => {
   const dispatch = useDispatch();
   const storedCartItems = JSON.parse(localStorage.getItem('cart')) || [];
-
+  
   const cartReducer = useSelector((state) => state.cart);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [cart, setCart] = useState([])
-
-  useEffect(() => {
-    
-    setCart(storedCartItems || cartReducer)
-
-    return () => {
-      setCart(storedCartItems)
-    }
-    
-  }, [storedCartItems]);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -33,7 +22,22 @@ const ShoppingCart = () => {
   };
 
   const isUserLoggedIn = !!localStorage.getItem("token");
-  const totalAmount = storedCartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+
+  const groupedCartItems = Object.values(
+    storedCartItems.reduce((acc, item) => {
+      const key = item.id;
+      if (!acc[key]) {
+        acc[key] = { ...item, quantity: 0 };
+      }
+      acc[key].quantity += item.quantity;
+      return acc;
+    }, {})
+  );
+  
+  const totalAmount = groupedCartItems.reduce(
+    (acc, item) => acc + item.price * item.quantity,
+    0
+  );
   const formattedNumber = parseFloat(totalAmount).toFixed(2);
 
   const handleFinishPurchase = () => {
@@ -70,7 +74,6 @@ const ShoppingCart = () => {
     }));
 
     dispatch(finishPurchase(objetoPago));
-    setCart([])
     Swal.fire('Compra en proceso');
     handleCancel();
     dispatch(finishPurchase([]))
@@ -80,7 +83,7 @@ const ShoppingCart = () => {
     <div className="relative min-h-[100vh] bg-gray-900">
       <div className="text-center min-h-[100vh] py-10 ">
         <h2 className="text-3xl justify-center align-center font-bold mt-3 text-white">Tu carrito</h2>
-        {storedCartItems.length === 0 ? (
+        {cartReducer.length === 0 ? (
           <p className=" text-4xl text-white pt-10 mt-10">Tu carrito esta vacío 😶</p>
         ) : (
           <table className="table p-5 text-gray-400 text-center border-separate space-y-6 rounded-md text-sm">
@@ -93,7 +96,7 @@ const ShoppingCart = () => {
               </tr>
             </thead>
             <tbody>
-            {cart.map((item) => (
+            {groupedCartItems.map((item) => (
                   <PurchaseCard 
                     key={item.id}
                     img={item.image}
@@ -111,7 +114,7 @@ const ShoppingCart = () => {
           </table>
         )}
         <div className="relative text-2xl rounded-xl text-center mt-3">
-          { storedCartItems.length > 0 &&
+          { cartReducer.length > 0 &&
             <button
               disabled={storedCartItems.length === 0}
               onClick={handleFinishPurchase}

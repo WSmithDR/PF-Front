@@ -13,10 +13,7 @@ import { getUserByID } from "../../redux/actions";
 const NavBar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const cart = useSelector((state) => {
-    const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
-    return state.cart.length > 0 ? state.cart : storedCart;
-  });
+  const cart = useSelector((state) => (state.cart));
   
   const quantityProducts = cart.reduce((total, product) => total + product.quantity, 0);
 

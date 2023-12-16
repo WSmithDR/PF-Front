@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getProductReview } from '../redux/actions'; 
+import { getReviews } from '../redux/actions'; 
 
 const Reviews = ({ productId }) => {
   const dispatch = useDispatch();
   const reviews = useSelector((state) => state.reviews);
 
   useEffect(() => {
-    dispatch(getProductReview(productId));
+    dispatch(getReviews(productId));
   }, [dispatch, productId]);
 
 

@@ -2,18 +2,18 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import { addToCart, getProductsById, getProductReview } from '../../redux/actions';
+import { addToCart, getDetailProduct, getReviews } from '../../redux/actions';
 import Reviews from '../Reviews';
 
 const Detail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const productById = useSelector((state) => state.productById);
+  const productById = useSelector((state) => state.detailProduct);
   const [selectedQuantity, setSelectedQuantity] = useState(1);
 
   useEffect(() => {
-    dispatch(getProductsById(id));
-    dispatch(getProductReview(id));
+    dispatch(getDetailProduct(id));
+    dispatch(getReviews(id));
   }, [dispatch, id]);
 
   const handleQuantityChange = (event) => {
