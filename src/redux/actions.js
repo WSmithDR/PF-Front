@@ -20,6 +20,8 @@ import {
 
   CREATE_REVIEW_FAILURE, CREATE_REVIEW_REQUEST, CREATE_REVIEW_SUCCESS,
   GET_REVIEWS_FAILURE, GET_REVIEWS_REQUEST, GET_REVIEWS_SUCCESS,
+  PUT_REVIEW_FAILURE, PUT_REVIEW_REQUEST, PUT_REVIEW_SUCCESS,
+  DELETE_REVIEW_FAILURE, DELETE_REVIEW_REQUEST, DELETE_REVIEW_SUCCESS,
 
   FINISH_PURCHASE,
   REMOVE_FROM_CART,
@@ -354,6 +356,58 @@ export const getReviews = (productId) => {
     } catch (error) {
       dispatch(getReviewsError(error.response.data.error));
     };
+  };
+};
+
+export const putReviewRequest = () => ({
+  type: PUT_REVIEW_REQUEST
+});
+export const putReviewSuccess = (data) => ({
+  type: PUT_REVIEW_SUCCESS,
+  payload: data
+});
+export const putReviewError = (error) => ({
+  type: PUT_REVIEW_FAILURE,
+  payload: error
+});
+export const putReview = (datas) => {
+  return async (dispatch) => {
+    dispatch(putReviewRequest());
+    try {
+      const { data } = await axios.put(`${URL}/review`, datas);
+      console.log(datas);
+      dispatch(putReviewSuccess(data));
+    } catch (error) {
+      dispatch(putReviewError(error.response.data.error));
+    };
+  };
+};
+
+export const deleteReviewRequest = () => ({
+  type: DELETE_REVIEW_REQUEST
+});
+export const deleteReviewSuccess = (data) => ({
+  type: DELETE_REVIEW_SUCCESS,
+  payload: data
+});
+export const deleteReviewError = (error) => ({
+  type: DELETE_REVIEW_FAILURE,
+  payload: error
+});
+export const deleteReview = (reviewId, userId) => {
+  return async (dispatch) => {
+    dispatch(deleteReviewRequest());
+
+    try {
+      const { data } = await axios.delete(`${URL}/review/${reviewId}`, { data: { userId } });
+
+      console.log(data);
+
+      dispatch(deleteReviewSuccess(data));
+    } catch (error) {
+      console.error(error.response.data.error);
+      dispatch(deleteReviewError(error.response.data.error));
+    }
   };
 };
 

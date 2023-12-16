@@ -98,6 +98,13 @@ const initialState = {
   successGetReviews: false,
   reviews: [],
 
+  loadingPutReview: false,
+  errorPutReview: false,
+  successPutReview: false,
+
+  loadingDeleteReview: false,
+  errorDeleteReview: false,
+  successDeleteReview: false,
 
   //CART
   cart: localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [],

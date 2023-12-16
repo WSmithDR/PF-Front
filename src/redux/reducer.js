@@ -20,6 +20,8 @@ import {
 
   CREATE_REVIEW_FAILURE, CREATE_REVIEW_REQUEST, CREATE_REVIEW_SUCCESS,
   GET_REVIEWS_FAILURE, GET_REVIEWS_REQUEST, GET_REVIEWS_SUCCESS,
+  PUT_REVIEW_FAILURE, PUT_REVIEW_REQUEST, PUT_REVIEW_SUCCESS,
+  DELETE_REVIEW_FAILURE, DELETE_REVIEW_REQUEST, DELETE_REVIEW_SUCCESS,
 
   FINISH_PURCHASE,
   ADD_TO_CART,
@@ -388,6 +390,57 @@ const reducer = (state = initialState, action) => {
         successGetReviews: false,
       };
 
+    case PUT_REVIEW_REQUEST:
+      return{
+        ...state,
+        loadingPutReview: true,
+        errorPutReview: false,
+        successPutReview: false,
+      };
+    case PUT_REVIEW_SUCCESS:
+      const updatedReviews = state.reviews.map((review) =>
+      review._id === action.payload._id ? action.payload : review
+    );
+      return{
+        ...state,
+        loadingPutReview: false,
+        errorPutReview: false,
+        successPutReview: true,
+        reviews: updatedReviews
+      };
+    case PUT_REVIEW_FAILURE:
+      return{
+        ...state,
+        loadingPutReview: false,
+        errorPutReview: action.payload,
+        successPutReview: false,
+      };
+
+    case DELETE_REVIEW_REQUEST:
+      return{
+        ...state,
+        loadingDeleteReview: true,
+        errorDeleteReview: false,
+        successDeleteReview: false,
+      };
+    case DELETE_REVIEW_SUCCESS:
+      const updatedReviewsDelete = state.reviews.filter((review) => {
+        return review._id !== action.payload._id
+      });
+      return{
+        ...state,
+        loadingDeleteReview: false,
+        errorDeleteReview: false,
+        successDeleteReview: true,
+        reviews: updatedReviewsDelete
+      };
+    case DELETE_REVIEW_FAILURE:
+      return{
+        ...state,
+        loadingDeleteReview: false,
+        errorDeleteReview: action.payload,
+        successDeleteReview: false,
+      };
 
     //ADMINS
     case GET_ADMIN_PRODUCTS_REQUEST:
