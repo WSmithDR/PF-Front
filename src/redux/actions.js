@@ -43,8 +43,8 @@ import {
   SET_CURRENT_PAGE, SET_FILTERS,
 } from './types';
 
-//export const URL = 'https://pfback1-q5aoyanf.b4a.run';
-export const URL = 'http://localhost:3001';
+export const URL = 'https://pfback1-q5aoyanf.b4a.run';
+//export const URL = 'http://localhost:3001';
 
 
 //PRODUCTS
