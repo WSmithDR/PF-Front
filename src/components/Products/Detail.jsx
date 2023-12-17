@@ -2,18 +2,17 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import { addToCart, getProductsById, getProductReview } from '../../redux/actions';
-import Reviews from '../Reviews';
+import { addToCart, getDetailProduct } from '../../redux/actions';
+import Reviews from '../Review/Reviews';
 
 const Detail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const productById = useSelector((state) => state.productById);
+  const productById = useSelector((state) => state.detailProduct);
   const [selectedQuantity, setSelectedQuantity] = useState(1);
 
   useEffect(() => {
-    dispatch(getProductsById(id));
-    dispatch(getProductReview(id));
+    dispatch(getDetailProduct(id));
   }, [dispatch, id]);
 
   const handleQuantityChange = (event) => {
@@ -38,22 +37,21 @@ const Detail = () => {
       showConfirmButton: false,
       timer: 1500, 
     });
-    
   };
 
   return (
-    <div className='py-40 min-h-[100vh] bg-gray-300 h-screen'>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
-        <div className="flex flex-col md:flex-row -mx-4">
-          <div className="md:flex-1 px-4">
+    <div className='py-40 bg-gray-900 h-full'>
+      <div className="max-w-9xl mx-auto  px-4 sm:px-6 lg:px-8 mt-6">
+        <div className="flex flex-col pt-2 md:flex-row -mx-4">
+          <div className="md:flex-1 px-2">
             <div
               x-data="{ image: 1 }"
               x-cloak
-              className="h-64 md:h-80 rounded-lg bg-gray-100 mb-4"
+              className="h-72 md:h-80 rounded-lg bg-gray-900 mb-4"
             >
             <div
               x-show="image === 1"
-              className="h-64 md:h-80 rounded-lg bg-gray-100 mb-4 flex items-center justify-center"
+              className="h-72 md:h-80 rounded-lg bg-gray-800 mb-4 flex items-center justify-center"
             >
               <img
                 src={productById.img}
@@ -61,33 +59,32 @@ const Detail = () => {
                 className="w-full h-full object-contain rounded-lg p-2"
               />
             </div>
-            <Reviews productId={id} />
             </div>
           </div>
-          <div className="md:flex-1 px-4">
-            <h2 className="mb-2 leading-tight tracking-tight font-bold text-gray-800 text-2xl md:text-3xl">{productById.name}</h2>
-            <p className="text-gray-500 text-sm">
-              By <a href="#" className="text-indigo-600 hover:underline">{productById.brand}</a>
+          <div className="md:flex-1 px-1">
+            <h2 className="mb-2 leading-tight tracking-tight font-bold text-gray-50 text-2xl md:text-3xl">{productById.name}</h2>
+            <p className="text-gray-50 text-sm">
+              By <a href="#" className="text-indigo-300 hover:underline">{productById.brand}</a>
             </p>
 
             <div className="flex items-center space-x-4 my-4">
               <div>
-                <div className="rounded-lg bg-gray-100 flex py-2 px-3">
-                  <span className="font-bold text-indigo-600 text-3xl">$ {productById.price}</span>
+                <div className="rounded-lg bg-gray-800 flex py-2 px-3">
+                  <span className="font-bold text-indigo-300 text-3xl">$ {productById.price}</span>
                 </div>
               </div>
             </div>
 
-            <p className="text-gray-500">{productById.description}</p>
-            <p className="text-gray-900 mt-5">Max Cantidad: {productById.quantity}</p>
-            <p className="text-gray-900">Categoria: {productById.category}</p>
+            <p className="text-gray-400">{productById.description}</p>
+            <p className="text-gray-400 mt-5">Max Cantidad: {productById.quantity}</p>
+            <p className="text-gray-400">Categoria: {productById.category}</p>
 
             <div className="flex py-4 space-x-4 items-center">
               <div className="relative">
                 <select
                   value={selectedQuantity}
                   onChange={handleQuantityChange}
-                  className="cursor-pointer appearance-none rounded-lg border border-gray-200 p-3 h-14 flex items-end text-center "
+                  className="cursor-pointer appearance-none rounded-lg border border-gray-800 p-3 h-14 flex items-end text-center "
                 >
                   {[...Array(productById.quantity).keys()].map((num) => (
                     <option key={num + 1} value={num + 1}>
@@ -98,18 +95,18 @@ const Detail = () => {
                 </select>
               </div>
 
-
               <button type="button"
                onClick={handleAddToCart}
-              className="h-14 px-6 py-2 font-semibold rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white">
+              className="h-14 px-6 py-2 font-semibold rounded-xl bg-indigo-500 hover:bg-indigo-800 hover:text-white text-gray-50">
                 Añadir al carro
               </button>
             </div>
           </div>
         </div>
       </div>
+      <Reviews productId={id} />
     </div>
- );
+  );
 };
 
 export default Detail;

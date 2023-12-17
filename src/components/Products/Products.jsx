@@ -1,7 +1,5 @@
-
 import { productsContainer } from "../../constants/styles/products"
 import Product from "./Product"
-
 
 const Products = ({products}) =>{
     return(
