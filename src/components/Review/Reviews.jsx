@@ -77,6 +77,7 @@ const Reviews = ({ productId }) => {
         productId: productId,
         reviewId: null,
       });
+      
     } else {
       dispatch(createReview(review));
       setReview({
@@ -84,17 +85,18 @@ const Reviews = ({ productId }) => {
         userId: userId,
         productId: productId,
       });
-    }
+    };
   };
 
   const handleEditClick = (reviewId) => {
     setActiveDropdownIds({});
     setEditedReviewId(reviewId);
-  };  
+  }
 
   const handleDeleteClick = (reviewId, userId) => {
     dispatch(deleteReview(reviewId, userId));
   };
+
 
   return (
     <section className="bg-white h-full dark:bg-gray-900 py-8 mt-10 lg:py-16 antialiased">
@@ -129,7 +131,14 @@ const Reviews = ({ productId }) => {
 
         <div className="grid grid-cols-2 gap-4">          
           {reviews.length > 0 && reviews.map((review) => (
-          <article data-id={review._id} data-is-edited={editedReviewId === review._id} key={review._id} className="p-4 mt-2 text-base bg-black rounded-lg dark:bg-gray-950" style={{ maxWidth: '600px' }}>            
+          <article
+            data-id={review._id}
+            data-is-edited={editedReviewId === review._id}
+            key={review._id}
+            className={`p-4 mt-2 text-base bg-black rounded-lg dark:bg-gray-950 ${
+              editedReviewId === review._id ? 'h-72 m-0 p-0' : 'h-48 '
+            }`}
+          >      
             <footer className="flex justify-between items-center mb-2">
               <div className="flex items-center">
                 <p className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">
@@ -217,7 +226,7 @@ const Reviews = ({ productId }) => {
                 </div>
                 <button 
                   type="submit"
-                  className="inline-flex items-center py-2.5 px-4  font-medium text-center text-white bg-gray-600 rounded-lg focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-900 hover:bg-gray-500"
+                  className="inline-flex items-center py-2.5 px-4 mt-3 font-medium text-center text-white bg-gray-600 rounded-lg focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-900 hover:bg-gray-500"
                 >
                   Guardar cambios
                 </button>
@@ -233,20 +242,15 @@ const Reviews = ({ productId }) => {
               <p className="text-gray-500 pt-2 dark:text-gray-400">
                 {review.comment}
               </p>
-            )
-
-            }
-
-            <div className="flex items-center mt-4 space-x-4">
-              <button type="button" className="flex items-center text-sm text-gray-500 hover:underline dark:text-gray-400 font-medium">
-                <svg className="mr-1.5 w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5h5M5 8h2m6-3h2m-5 3h6m2-7H2a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h3v5l5-5h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z"/>
-                </svg>
-                Responder
-              </button>
-            </div>
+            )}
           </article>
           ))}
+          
+          { reviews.length === 0 && (
+            <div className="flex justify-left items-center">
+              <p className="text-indigo-100 text-center">No hay comentarios</p>
+            </div>
+          )}
         </div>
         
       </div>
