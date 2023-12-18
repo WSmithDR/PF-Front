@@ -5,9 +5,15 @@ import { jwtDecode } from 'jwt-decode';
 
 const Reviews = ({ productId }) => {
   const token = localStorage.getItem('token');
-  const decodedToken = jwtDecode(token);
-  const userId = decodedToken.id;
+  
+  if (!token) {
+    console.error('Token is missing or invalid');
+    return null;
+  }
 
+  const decodedToken = jwtDecode(token);
+  const userId = decodedToken?.id || 'defaultUserId';
+  
   const dispatch = useDispatch();
   const reviews = useSelector((state) => state.reviews);
   const userData = useSelector((state) => state.userData);
