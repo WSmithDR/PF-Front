@@ -2,15 +2,25 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getReviews, createReview, putReview, deleteReview } from '../../redux/actions'; 
 import { jwtDecode } from 'jwt-decode';
+import Swal from 'sweetalert2';
+import AuthModal from '../AuthModal';
 
 const Reviews = ({ productId }) => {
   const token = localStorage.getItem('token');
-  const decodedToken = jwtDecode(token);
-  const userId = decodedToken.id;
-
+  const decodedToken = token ? jwtDecode(token) : null;  
+  const userId = decodedToken?.id || 'defaultUserId';
+  
   const dispatch = useDispatch();
   const reviews = useSelector((state) => state.reviews);
   const userData = useSelector((state) => state.userData);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
 
   const quantityReviews = reviews.length;
 
@@ -20,6 +30,7 @@ const Reviews = ({ productId }) => {
 
   const [activeDropdownIds, setActiveDropdownIds] = useState({});
   const [editedReviewId, setEditedReviewId] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleClickDropdown = (e) => {
     const reviewId = e.target.dataset.id;
@@ -60,32 +71,48 @@ const Reviews = ({ productId }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-  
-    if (editedReviewId) {
-      const updatedReview = {
-        ...reviewEdit,
-        reviewId: editedReviewId,
-      };
-      
-      dispatch(putReview(updatedReview));
-      dispatch(getReviews(productId));
 
-      setEditedReviewId(null);
-      setReviewEdit({
-        comment: '',
-        userId: userId,
-        productId: productId,
-        reviewId: null,
-      });
-      
-    } else {
-      dispatch(createReview(review));
-      setReview({
-        comment: '',
-        userId: userId,
-        productId: productId,
+    if (!token) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Inicia sesión para comentar',
+        showCancelButton: true,
+        confirmButtonText: 'Iniciar sesión',
+        cancelButtonText: 'Cancelar',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          showModal();
+        }
       });
     };
+
+    if (token) {
+      if (editedReviewId) {
+        const updatedReview = {
+          ...reviewEdit,
+          reviewId: editedReviewId,
+        };
+        
+        dispatch(putReview(updatedReview));
+        dispatch(getReviews(productId));
+  
+        setEditedReviewId(null);
+        setReviewEdit({
+          comment: '',
+          userId: userId,
+          productId: productId,
+          reviewId: null,
+        });
+        
+      } else {
+        dispatch(createReview(review));
+        setReview({
+          comment: '',
+          userId: userId,
+          productId: productId,
+        });
+      };
+    }
   };
 
   const handleEditClick = (reviewId) => {
@@ -97,6 +124,7 @@ const Reviews = ({ productId }) => {
     dispatch(deleteReview(reviewId, userId));
   };
 
+  console.log(reviews);
 
   return (
     <section className="bg-white h-full dark:bg-gray-900 py-8 mt-10 lg:py-16 antialiased">
@@ -252,7 +280,7 @@ const Reviews = ({ productId }) => {
             </div>
           )}
         </div>
-        
+        <AuthModal isOpen={isModalOpen} onClose={handleCancel} />
       </div>
     </section>
   );
